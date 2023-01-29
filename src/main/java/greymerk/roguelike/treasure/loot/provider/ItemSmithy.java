@@ -1,20 +1,20 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.treasure.loot.Equipment;
-import greymerk.roguelike.treasure.loot.Quality;
-
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
 
-public class ItemSmithy extends ItemBase{
+import greymerk.roguelike.treasure.loot.Equipment;
+import greymerk.roguelike.treasure.loot.Quality;
 
-	public ItemSmithy(int weight, int level) {
-		super(weight, level);
-	}
+public class ItemSmithy extends ItemBase {
 
-	@Override
-	public ItemStack getLootItem(Random rand, int level) {
-		return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, Quality.IRON);
-	}
+    public ItemSmithy(int weight, int level) {
+        super(weight, level);
+    }
+
+    @Override
+    public ItemStack getLootItem(Random rand, int level) {
+        return ItemSpecialty.getRandomItem(Equipment.SWORD, rand, Quality.IRON);
+    }
 }

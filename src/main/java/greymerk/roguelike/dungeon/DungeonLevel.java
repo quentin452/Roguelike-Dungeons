@@ -7,58 +7,58 @@ import greymerk.roguelike.dungeon.settings.LevelSettings;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.IWorldEditor;
 
-public class DungeonLevel implements IDungeonLevel{
+public class DungeonLevel implements IDungeonLevel {
 
-	private Coord origin;
-	private LevelSettings settings;
-	private ILevelGenerator generator;
-	
-	public DungeonLevel(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin){
-		this.settings = settings;
-		this.origin = origin;
-	}
-	
-	public void generate(ILevelGenerator generator, Coord start, DungeonNode oldEnd){
-		this.generator = generator;
-		generator.generate(start, oldEnd);
-	}
-	
-	public int nodeCount(){
-		return this.getNodes().size();
-	}
+    private Coord origin;
+    private LevelSettings settings;
+    private ILevelGenerator generator;
 
-	@Override
-	public LevelSettings getSettings(){
-		return this.settings;
-	}
+    public DungeonLevel(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin) {
+        this.settings = settings;
+        this.origin = origin;
+    }
 
-	@Override
-	public List<DungeonNode> getNodes() {
-		return this.generator.getNodes();
-	}
+    public void generate(ILevelGenerator generator, Coord start, DungeonNode oldEnd) {
+        this.generator = generator;
+        generator.generate(start, oldEnd);
+    }
 
-	@Override
-	public List<DungeonTunnel> getTunnels() {
-		return this.generator.getTunnels();
-	}
-	
-	@Override
-	public boolean hasNearbyNode(Coord pos){
-		
-		for (DungeonNode node : this.getNodes()){
-			int dist = (int) node.getPosition().distance(pos);
+    public int nodeCount() {
+        return this.getNodes().size();
+    }
 
-			if(dist < node.getSize()){
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    public LevelSettings getSettings() {
+        return this.settings;
+    }
 
-	@Override
-	public boolean inRange(Coord pos) {		
-		int dist = (int) this.origin.distance(pos);
-		return dist < this.settings.getRange();
-	}
+    @Override
+    public List<DungeonNode> getNodes() {
+        return this.generator.getNodes();
+    }
+
+    @Override
+    public List<DungeonTunnel> getTunnels() {
+        return this.generator.getTunnels();
+    }
+
+    @Override
+    public boolean hasNearbyNode(Coord pos) {
+
+        for (DungeonNode node : this.getNodes()) {
+            int dist = (int) node.getPosition().distance(pos);
+
+            if (dist < node.getSize()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean inRange(Coord pos) {
+        int dist = (int) this.origin.distance(pos);
+        return dist < this.settings.getRange();
+    }
 
 }

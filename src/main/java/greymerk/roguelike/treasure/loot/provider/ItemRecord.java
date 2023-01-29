@@ -1,22 +1,20 @@
 package greymerk.roguelike.treasure.loot.provider;
 
-import greymerk.roguelike.treasure.loot.Record;
-
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
 
-public class ItemRecord extends ItemBase{
+import greymerk.roguelike.treasure.loot.Record;
 
-	public ItemRecord(int weight, int level) {
-		super(weight, level);
-	}
+public class ItemRecord extends ItemBase {
 
-	@Override
-	public ItemStack getLootItem(Random rand, int level) {
-		return Record.getRandomRecord(rand);
-	}
-	
-	
+    public ItemRecord(int weight, int level) {
+        super(weight, level);
+    }
+
+    @Override
+    public ItemStack getLootItem(Random rand, int level) {
+        return Record.getRandomRecord(rand);
+    }
 
 }

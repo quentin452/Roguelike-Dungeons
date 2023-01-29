@@ -8,26 +8,25 @@ import greymerk.roguelike.worldgen.blocks.StairType;
 import greymerk.roguelike.worldgen.blocks.Wood;
 import greymerk.roguelike.worldgen.blocks.WoodBlock;
 
-public class ThemeOak extends ThemeBase{
+public class ThemeOak extends ThemeBase {
 
-	public ThemeOak(){
-		
-		BlockWeightedRandom walls = new BlockWeightedRandom();
-		walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 30);
-		MetaBlock cracked = BlockType.get(BlockType.STONE_BRICK_CRACKED);
-		walls.addBlock(cracked, 20);
-		walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
-		walls.addBlock(BlockType.get(BlockType.GRAVEL), 1);
-		
-		MetaStair stair = new MetaStair(StairType.STONEBRICK);
+    public ThemeOak() {
 
-		this.primary = new BlockSet(walls, stair, walls);
-		
-		
-		MetaBlock pillar = Wood.get(WoodBlock.LOG);
-		MetaBlock segmentWall = Wood.get(Wood.OAK, WoodBlock.PLANK);
-		MetaStair segmentStair = new MetaStair(StairType.OAK);
-		
-		this.secondary =  new BlockSet(segmentWall, segmentStair, pillar);
-	}
+        BlockWeightedRandom walls = new BlockWeightedRandom();
+        walls.addBlock(BlockType.get(BlockType.STONE_BRICK), 30);
+        MetaBlock cracked = BlockType.get(BlockType.STONE_BRICK_CRACKED);
+        walls.addBlock(cracked, 20);
+        walls.addBlock(BlockType.get(BlockType.COBBLESTONE), 5);
+        walls.addBlock(BlockType.get(BlockType.GRAVEL), 1);
+
+        MetaStair stair = new MetaStair(StairType.STONEBRICK);
+
+        this.primary = new BlockSet(walls, stair, walls);
+
+        MetaBlock pillar = Wood.get(WoodBlock.LOG);
+        MetaBlock segmentWall = Wood.get(Wood.OAK, WoodBlock.PLANK);
+        MetaStair segmentStair = new MetaStair(StairType.OAK);
+
+        this.secondary = new BlockSet(segmentWall, segmentStair, pillar);
+    }
 }

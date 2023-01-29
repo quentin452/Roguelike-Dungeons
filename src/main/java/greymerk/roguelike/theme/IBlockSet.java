@@ -5,9 +5,12 @@ import greymerk.roguelike.worldgen.IStair;
 
 public interface IBlockSet {
 
-	public IBlockFactory getFloor();
-	public IBlockFactory getFill();
-	public IStair getStair();
-	public IBlockFactory getPillar();
-	
+    public IBlockFactory getFloor();
+
+    public IBlockFactory getFill();
+
+    public IStair getStair();
+
+    public IBlockFactory getPillar();
+
 }

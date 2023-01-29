@@ -23,119 +23,133 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsBrick extends DungeonBase {
 
-	
-	public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
-		
-		int x = origin.getX();
-		int y = origin.getY();
-		int z = origin.getZ();
-		
-		ITheme theme = settings.getTheme();
-		
-		IStair stair = theme.getPrimaryStair();
-		IBlockFactory blocks = theme.getPrimaryWall();
-		IBlockFactory pillar = theme.getPrimaryPillar();
-		MetaBlock air = BlockType.get(BlockType.AIR);
-		
-		// fill air inside
-		RectSolid.fill(editor, rand, new Coord(x - 3, y, z - 3), new Coord(x + 3, y + 3, z + 3), air);
-		RectSolid.fill(editor, rand, new Coord(x - 1, y + 4, z - 1), new Coord(x + 1, y + 4, z + 1), air);
-		
-		// shell
-		RectHollow.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y + 4, z + 4), blocks, false, true);
+    public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
+            Coord origin) {
 
-		RectSolid.fill(editor, rand, new Coord(x - 4, y - 1, z - 4), new Coord(x + 4, y - 1, z + 4), theme.getPrimaryFloor(), false, true);
-		
-		Coord start;
-		Coord end;
-		Coord cursor;
+        int x = origin.getX();
+        int y = origin.getY();
+        int z = origin.getZ();
 
-		
-		cursor = new Coord(x, y, z);
-		cursor.add(Cardinal.UP, 5);
-		air.set(editor, cursor);
-		cursor.add(Cardinal.UP, 1);
-		blocks.set(editor, rand, cursor);
-		
-		// Chests
-		List<Coord> space = new ArrayList<Coord>();
-		
-		for(Cardinal dir : Cardinal.directions){
-			
-			// top
-			cursor = new Coord(x, y, z);
-			cursor.add(dir, 1);
-			cursor.add(Cardinal.UP, 5);
-			stair.setOrientation(Cardinal.reverse(dir), true);
-			stair.set(editor, rand, cursor, false, true);
-			cursor.add(Cardinal.left(dir), 1);
-			blocks.set(editor, rand, cursor, false, true);
+        ITheme theme = settings.getTheme();
 
-			cursor = new Coord(x, y, z);
-			cursor.add(dir, 2);
-			cursor.add(Cardinal.UP, 4);
-			air.set(editor, cursor);
-			cursor.add(Cardinal.UP, 1);
-			blocks.set(editor, rand, cursor, false, true);
-			
-			// pillar
-			cursor = new Coord(x, y, z);
-			cursor.add(dir, 3);
-			cursor.add(Cardinal.left(dir), 3);
-			start = new Coord(cursor);
-			cursor.add(Cardinal.UP, 2);
-			end = new Coord(cursor);
-			RectSolid.fill(editor, rand, start, end, pillar, true, true);
-			cursor.add(Cardinal.UP, 1);
-			blocks.set(editor, rand, cursor);
-			
-			// pillar stairs
-			for(Cardinal orth : Cardinal.orthogonal(dir)){
-				cursor = new Coord(x, y, z);
-				cursor.add(dir, 3);
-				cursor.add(orth, 2);
-				cursor.add(Cardinal.UP, 3);
-				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.set(editor, rand, cursor);
-			}
+        IStair stair = theme.getPrimaryStair();
+        IBlockFactory blocks = theme.getPrimaryWall();
+        IBlockFactory pillar = theme.getPrimaryPillar();
+        MetaBlock air = BlockType.get(BlockType.AIR);
 
-			// layer above pillars
-			cursor = new Coord(x, y, z);
-			cursor.add(dir, 2);
-			cursor.add(Cardinal.left(dir), 2);
-			cursor.add(Cardinal.UP, 4);
-			blocks.set(editor, rand, cursor, false, true);
-			
-			for(Cardinal orth : Cardinal.orthogonal(dir)){
-				cursor = new Coord(x, y, z);
-				cursor.add(Cardinal.UP, 4);
-				cursor.add(dir, 2);
-				cursor.add(orth, 1);
-				stair.setOrientation(Cardinal.reverse(orth), true);
-				stair.set(editor, rand, cursor, false, true);
-			}
-			
-			cursor = new Coord(x, y, z);
-			cursor.add(dir, 1);
-			cursor.add(Cardinal.left(dir), 1);
-			cursor.add(Cardinal.UP, 5);
-			blocks.set(editor, rand, cursor, false, true);
-			
-			for(Cardinal orth : Cardinal.orthogonal(dir)){
-				cursor = new Coord(x, y, z);
-				cursor.add(dir, 3);
-				cursor.add(orth, 2);
-				space.add(cursor);
-			}
-		}
+        // fill air inside
+        RectSolid.fill(editor, rand, new Coord(x - 3, y, z - 3), new Coord(x + 3, y + 3, z + 3), air);
+        RectSolid.fill(editor, rand, new Coord(x - 1, y + 4, z - 1), new Coord(x + 1, y + 4, z + 1), air);
 
-		List<Treasure> types = new ArrayList<Treasure>(Arrays.asList(Treasure.ARMOUR, Treasure.WEAPONS, Treasure.TOOLS));
-		Treasure.createChests(editor, rand, 1, space, types, Dungeon.getLevel(origin.getY()));
-		Spawner.generate(editor, rand, settings, new Coord(x, y, z));
-		return true;
-	}
-	
-	public int getSize(){
-		return 6;
-	}
+        // shell
+        RectHollow.fill(
+                editor,
+                rand,
+                new Coord(x - 4, y - 1, z - 4),
+                new Coord(x + 4, y + 4, z + 4),
+                blocks,
+                false,
+                true);
+
+        RectSolid.fill(
+                editor,
+                rand,
+                new Coord(x - 4, y - 1, z - 4),
+                new Coord(x + 4, y - 1, z + 4),
+                theme.getPrimaryFloor(),
+                false,
+                true);
+
+        Coord start;
+        Coord end;
+        Coord cursor;
+
+        cursor = new Coord(x, y, z);
+        cursor.add(Cardinal.UP, 5);
+        air.set(editor, cursor);
+        cursor.add(Cardinal.UP, 1);
+        blocks.set(editor, rand, cursor);
+
+        // Chests
+        List<Coord> space = new ArrayList<Coord>();
+
+        for (Cardinal dir : Cardinal.directions) {
+
+            // top
+            cursor = new Coord(x, y, z);
+            cursor.add(dir, 1);
+            cursor.add(Cardinal.UP, 5);
+            stair.setOrientation(Cardinal.reverse(dir), true);
+            stair.set(editor, rand, cursor, false, true);
+            cursor.add(Cardinal.left(dir), 1);
+            blocks.set(editor, rand, cursor, false, true);
+
+            cursor = new Coord(x, y, z);
+            cursor.add(dir, 2);
+            cursor.add(Cardinal.UP, 4);
+            air.set(editor, cursor);
+            cursor.add(Cardinal.UP, 1);
+            blocks.set(editor, rand, cursor, false, true);
+
+            // pillar
+            cursor = new Coord(x, y, z);
+            cursor.add(dir, 3);
+            cursor.add(Cardinal.left(dir), 3);
+            start = new Coord(cursor);
+            cursor.add(Cardinal.UP, 2);
+            end = new Coord(cursor);
+            RectSolid.fill(editor, rand, start, end, pillar, true, true);
+            cursor.add(Cardinal.UP, 1);
+            blocks.set(editor, rand, cursor);
+
+            // pillar stairs
+            for (Cardinal orth : Cardinal.orthogonal(dir)) {
+                cursor = new Coord(x, y, z);
+                cursor.add(dir, 3);
+                cursor.add(orth, 2);
+                cursor.add(Cardinal.UP, 3);
+                stair.setOrientation(Cardinal.reverse(orth), true);
+                stair.set(editor, rand, cursor);
+            }
+
+            // layer above pillars
+            cursor = new Coord(x, y, z);
+            cursor.add(dir, 2);
+            cursor.add(Cardinal.left(dir), 2);
+            cursor.add(Cardinal.UP, 4);
+            blocks.set(editor, rand, cursor, false, true);
+
+            for (Cardinal orth : Cardinal.orthogonal(dir)) {
+                cursor = new Coord(x, y, z);
+                cursor.add(Cardinal.UP, 4);
+                cursor.add(dir, 2);
+                cursor.add(orth, 1);
+                stair.setOrientation(Cardinal.reverse(orth), true);
+                stair.set(editor, rand, cursor, false, true);
+            }
+
+            cursor = new Coord(x, y, z);
+            cursor.add(dir, 1);
+            cursor.add(Cardinal.left(dir), 1);
+            cursor.add(Cardinal.UP, 5);
+            blocks.set(editor, rand, cursor, false, true);
+
+            for (Cardinal orth : Cardinal.orthogonal(dir)) {
+                cursor = new Coord(x, y, z);
+                cursor.add(dir, 3);
+                cursor.add(orth, 2);
+                space.add(cursor);
+            }
+        }
+
+        List<Treasure> types = new ArrayList<Treasure>(
+                Arrays.asList(Treasure.ARMOUR, Treasure.WEAPONS, Treasure.TOOLS));
+        Treasure.createChests(editor, rand, 1, space, types, Dungeon.getLevel(origin.getY()));
+        Spawner.generate(editor, rand, settings, new Coord(x, y, z));
+        return true;
+    }
+
+    public int getSize() {
+        return 6;
+    }
 }

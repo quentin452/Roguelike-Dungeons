@@ -8,10 +8,10 @@ import greymerk.roguelike.treasure.ITreasureChest;
 
 public interface IDungeon {
 
-	public void generate(ISettings setting, int x, int z);
-	
-	public void spawnInChunk(Random rand, int x, int z);
-	
-	public List<ITreasureChest> getChests();
-	
+    public void generate(ISettings setting, int x, int z);
+
+    public void spawnInChunk(Random rand, int x, int z);
+
+    public List<ITreasureChest> getChests();
+
 }

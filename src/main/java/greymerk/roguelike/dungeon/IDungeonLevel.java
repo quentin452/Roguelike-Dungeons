@@ -7,14 +7,14 @@ import greymerk.roguelike.worldgen.Coord;
 
 public interface IDungeonLevel {
 
-	public LevelSettings getSettings();
-	
-	public List<DungeonNode> getNodes();
-	
-	public List<DungeonTunnel> getTunnels();
+    public LevelSettings getSettings();
 
-	public boolean inRange(Coord pos);
-	
-	boolean hasNearbyNode(Coord pos);
+    public List<DungeonNode> getNodes();
+
+    public List<DungeonTunnel> getTunnels();
+
+    public boolean inRange(Coord pos);
+
+    boolean hasNearbyNode(Coord pos);
 
 }
