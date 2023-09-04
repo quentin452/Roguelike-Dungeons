@@ -31,7 +31,7 @@ public class DungeonTunnel implements Iterable<Coord> {
         this.end = end;
         this.tunnel = new RectSolid(start, end).get();
         this.dir = dir;
-        this.segments = new ArrayList<ISegment>();
+        this.segments = new ArrayList<>();
     }
 
     @Override

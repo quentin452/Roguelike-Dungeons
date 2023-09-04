@@ -18,12 +18,14 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 public class WorldEditor implements IWorldEditor {
 
     World world;
+    private final Map<Coord, MetaBlock> blockCache;
     private Map<Block, Integer> stats;
     private TreasureManager chests;
 
     public WorldEditor(World world) {
         this.world = world;
         stats = new HashMap<Block, Integer>();
+        this.blockCache = new HashMap<>();
         this.chests = new TreasureManager();
     }
 
@@ -55,7 +57,6 @@ public class WorldEditor implements IWorldEditor {
         }
 
         return true;
-
     }
 
     @Override
@@ -122,7 +123,18 @@ public class WorldEditor implements IWorldEditor {
 
     @Override
     public MetaBlock getBlock(Coord pos) {
-        return new MetaBlock(world.getBlock(pos.getX(), pos.getY(), pos.getZ()));
+        // Check the block cache first
+        if (blockCache.containsKey(pos)) {
+            return blockCache.get(pos);
+        }
+
+        // If not in cache, perform the block lookup
+        MetaBlock block = new MetaBlock(world.getBlock(pos.getX(), pos.getY(), pos.getZ()));
+
+        // Store the result in the cache
+        blockCache.put(pos, block);
+
+        return block;
     }
 
     @Override
