@@ -17,44 +17,40 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class WorldEditor implements IWorldEditor {
 
+    private static final Block CHEST_BLOCK = Blocks.chest;
+    private static final Block TRAPPED_CHEST_BLOCK = Blocks.trapped_chest;
+    private static final Block MOB_SPAWNER_BLOCK = Blocks.mob_spawner;
+
     World world;
     private final Map<Coord, MetaBlock> blockCache;
-    private Map<Block, Integer> stats;
-    private TreasureManager chests;
+    private final Map<Block, Integer> stats;
+    private final TreasureManager chests;
 
     public WorldEditor(World world) {
         this.world = world;
-        stats = new HashMap<Block, Integer>();
+        stats = new HashMap<>();
         this.blockCache = new HashMap<>();
         this.chests = new TreasureManager();
     }
 
     public boolean setBlock(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid) {
-
         MetaBlock currentBlock = getBlock(pos);
-
-        if (currentBlock.getBlock() == Blocks.chest) return false;
-        if (currentBlock.getBlock() == Blocks.trapped_chest) return false;
-        if (currentBlock.getBlock() == Blocks.mob_spawner) return false;
+        if (currentBlock.getBlock() == CHEST_BLOCK || currentBlock.getBlock() == TRAPPED_CHEST_BLOCK || currentBlock.getBlock() == MOB_SPAWNER_BLOCK) {
+            return false;
+        }
 
         boolean isAir = world.isAirBlock(pos.getX(), pos.getY(), pos.getZ());
-
-        if (!fillAir && isAir) return false;
-        if (!replaceSolid && !isAir) return false;
-
-        try {
-            world.setBlock(pos.getX(), pos.getY(), pos.getZ(), block.getBlock(), block.getMeta(), block.getFlag());
-        } catch (NullPointerException npe) {
-            // ignore it.
+        if (!fillAir && isAir) {
+            return false;
+        }
+        if (!replaceSolid && !isAir) {
+            return false;
         }
 
-        Block type = block.getBlock();
-        Integer count = stats.get(type);
-        if (count == null) {
-            stats.put(type, 1);
-        } else {
-            stats.put(type, count + 1);
-        }
+
+        world.setBlock(pos.getX(), pos.getY(), pos.getZ(), block.getBlock(), block.getMeta(), block.getFlag());
+
+        stats.merge(block.getBlock(), 1, Integer::sum);
 
         return true;
     }
@@ -123,15 +119,12 @@ public class WorldEditor implements IWorldEditor {
 
     @Override
     public MetaBlock getBlock(Coord pos) {
-        // Check the block cache first
         if (blockCache.containsKey(pos)) {
             return blockCache.get(pos);
         }
 
-        // If not in cache, perform the block lookup
         MetaBlock block = new MetaBlock(world.getBlock(pos.getX(), pos.getY(), pos.getZ()));
 
-        // Store the result in the cache
         blockCache.put(pos, block);
 
         return block;
@@ -156,20 +149,18 @@ public class WorldEditor implements IWorldEditor {
         if (block.getMaterial() == Material.grass) return false;
         if (block.getMaterial() == Material.gourd) return false;
         if (block.getMaterial() == Material.leaves) return false;
-        if (block.getMaterial() == Material.plants) return false;
-
-        return true;
+        return block.getMaterial() != Material.plants;
     }
 
     @Override
     public String toString() {
-        String toReturn = "";
+        StringBuilder toReturn = new StringBuilder();
 
         for (Map.Entry<Block, Integer> pair : stats.entrySet()) {
-            toReturn += pair.getKey().getLocalizedName() + ": " + pair.getValue() + "\n";
+            toReturn.append(pair.getKey().getLocalizedName()).append(": ").append(pair.getValue()).append("\n");
         }
 
-        return toReturn;
+        return toReturn.toString();
     }
 
     @Override
