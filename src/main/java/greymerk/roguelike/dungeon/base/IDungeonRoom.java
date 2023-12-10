@@ -9,11 +9,11 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface IDungeonRoom {
 
-    public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
-            Coord origin);
+    boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
+                     Coord origin);
 
-    public int getSize();
+    int getSize();
 
-    public boolean validLocation(IWorldEditor editor, Cardinal dir, Coord pos);
+    boolean validLocation(IWorldEditor editor, Cardinal dir, Coord pos);
 
 }

@@ -15,10 +15,10 @@ public class DungeonGenerator {
     public static final int VERTICAL_SPACING = 10;
     public static final int TOPLEVEL = 50;
 
-    private List<IDungeonLevel> levels;
+    private final List<IDungeonLevel> levels;
 
     public DungeonGenerator() {
-        this.levels = new ArrayList<IDungeonLevel>();
+        this.levels = new ArrayList<>();
     }
 
     public void generate(IWorldEditor editor, ISettings settings, int inX, int inZ) {

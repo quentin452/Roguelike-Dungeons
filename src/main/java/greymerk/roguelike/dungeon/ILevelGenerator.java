@@ -6,12 +6,12 @@ import greymerk.roguelike.worldgen.Coord;
 
 public interface ILevelGenerator {
 
-    public void generate(Coord start, DungeonNode oldEnd);
+    void generate(Coord start, DungeonNode oldEnd);
 
-    public List<DungeonNode> getNodes();
+    List<DungeonNode> getNodes();
 
-    public List<DungeonTunnel> getTunnels();
+    List<DungeonTunnel> getTunnels();
 
-    public DungeonNode getEnd();
+    DungeonNode getEnd();
 
 }

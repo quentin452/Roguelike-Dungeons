@@ -9,8 +9,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class DungeonLevel implements IDungeonLevel {
 
-    private Coord origin;
-    private LevelSettings settings;
+    private final Coord origin;
+    private final LevelSettings settings;
     private ILevelGenerator generator;
 
     public DungeonLevel(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin) {
