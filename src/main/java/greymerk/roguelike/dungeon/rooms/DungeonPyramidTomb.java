@@ -140,7 +140,7 @@ public class DungeonPyramidTomb extends DungeonBase {
         end.add(Cardinal.EAST);
         RectSolid.fill(editor, rand, start, end, blocks, true, true);
 
-        sarcophagus(editor, rand, settings, entrances[0], origin);
+        sarcophagus(editor, rand, settings, origin);
 
         return true;
     }
@@ -190,64 +190,59 @@ public class DungeonPyramidTomb extends DungeonBase {
         theme.getPrimaryPillar().set(editor, rand, cursor);
     }
 
-    private void sarcophagus(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir, Coord origin) {
+    private void placeBlock(IWorldEditor editor, Coord position, BlockType blockType) {
+        MetaBlock block = BlockType.get(blockType);
+        block.set(editor, position);
+    }
+
+    private void generateStair(IWorldEditor editor, Coord position, Cardinal orientation) {
         IStair stair = new MetaStair(StairType.QUARTZ);
-        MetaBlock blocks = BlockType.get(BlockType.QUARTZ);
+        stair.setOrientation(orientation, false).set(editor, position);
+        position.add(Cardinal.UP);
+        stair.setOrientation(orientation, true).set(editor, position);
+        position.add(Cardinal.UP);
+        stair.setOrientation(orientation, false).set(editor, position);
+    }
+
+    private void sarcophagus(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin) {
+        BlockType quartzBlock = BlockType.QUARTZ;
 
         Coord cursor;
 
         cursor = new Coord(origin);
-        blocks.set(editor, cursor);
+        placeBlock(editor, cursor, quartzBlock);
         cursor.add(Cardinal.UP);
         Treasure.generate(editor, rand, cursor, Treasure.ORE, Dungeon.getLevel(cursor.getY()));
         cursor.add(Cardinal.UP);
-        blocks.set(editor, cursor);
+        placeBlock(editor, cursor, quartzBlock);
 
-        for (Cardinal end : Cardinal.orthogonal(dir)) {
-
+        for (Cardinal end : Cardinal.values()) {
             cursor = new Coord(origin);
             cursor.add(end);
-            blocks.set(editor, cursor);
+            placeBlock(editor, cursor, quartzBlock);
             cursor.add(Cardinal.UP);
             Spawner.generate(editor, rand, settings, cursor, Spawner.ZOMBIE);
             cursor.add(Cardinal.UP);
-            blocks.set(editor, cursor);
+            placeBlock(editor, cursor, quartzBlock);
 
             cursor = new Coord(origin);
             cursor.add(end, 2);
-            stair.setOrientation(end, false).set(editor, cursor);
-            cursor.add(Cardinal.UP);
-            stair.setOrientation(end, true).set(editor, cursor);
-            cursor.add(Cardinal.UP);
-            stair.setOrientation(end, false).set(editor, cursor);
+            generateStair(editor, cursor, end);
 
-            for (Cardinal side : Cardinal.orthogonal(end)) {
-
+            for (Cardinal side : Cardinal.values()) {
                 cursor = new Coord(origin);
                 cursor.add(side);
-                stair.setOrientation(side, false).set(editor, cursor);
-                cursor.add(Cardinal.UP);
-                stair.setOrientation(side, true).set(editor, cursor);
-                cursor.add(Cardinal.UP);
-                stair.setOrientation(side, false).set(editor, cursor);
+                generateStair(editor, cursor, side);
 
                 cursor = new Coord(origin);
                 cursor.add(side);
                 cursor.add(end);
-                stair.setOrientation(side, false).set(editor, cursor);
-                cursor.add(Cardinal.UP);
-                stair.setOrientation(side, true).set(editor, cursor);
-                cursor.add(Cardinal.UP);
-                stair.setOrientation(side, false).set(editor, cursor);
+                generateStair(editor, cursor, side);
 
                 cursor = new Coord(origin);
                 cursor.add(side);
                 cursor.add(end, 2);
-                stair.setOrientation(side, false).set(editor, cursor);
-                cursor.add(Cardinal.UP);
-                stair.setOrientation(side, true).set(editor, cursor);
-                cursor.add(Cardinal.UP);
-                stair.setOrientation(side, false).set(editor, cursor);
+                generateStair(editor, cursor, side);
             }
         }
     }

@@ -23,22 +23,27 @@ public class TreasureChest implements ITreasureChest {
     }
 
     public ITreasureChest generate(IWorldEditor editor, Random rand, Coord pos, int level, boolean trapped) {
-
         this.rand = rand;
         this.level = level;
 
         MetaBlock chestType = new MetaBlock(trapped ? Blocks.trapped_chest : Blocks.chest);
 
-        if (!chestType.set(editor, pos)) {
-            return null;
+        if (!editor.setBlock(pos, chestType, true, true)) {
+            return null; // Unable to set the chest block at the position
         }
 
         TileEntityChest chest = (TileEntityChest) editor.getTileEntity(pos);
+
+        if (chest == null) {
+            return null; // Tile entity couldn't be retrieved
+        }
+
         this.inventory = new Inventory(rand, chest);
 
         editor.addChest(this);
         return this;
     }
+
 
     @Override
     public boolean setSlot(int slot, ItemStack item) {

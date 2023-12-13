@@ -47,19 +47,23 @@ public enum Spawner {
     }
 
     public static void generate(IWorldEditor editor, Random rand, int level, Coord pos, Spawner type) {
-
-        if (!new MetaBlock(Blocks.mob_spawner).set(editor, pos)) return;
+        if (!editor.setBlock(pos, new MetaBlock(Blocks.mob_spawner), true, true)) {
+            return; // Unable to set mob spawner block at the position
+        }
 
         TileEntityMobSpawner spawner = (TileEntityMobSpawner) editor.getTileEntity(pos);
 
-        if (spawner == null) return;
+        if (spawner == null) {
+            return; // Tile entity couldn't be retrieved
+        }
 
         String name = getSpawnerName(type);
         MobSpawnerBaseLogic logic = spawner.func_145881_a();
         logic.setEntityName(name);
 
-        if (RogueConfig.getBoolean(RogueConfig.ROGUESPAWNERS)) setRoguelike(logic, level, name);
-
+        if (RogueConfig.getBoolean(RogueConfig.ROGUESPAWNERS)) {
+            setRoguelike(logic, level, name);
+        }
     }
 
     public static String getSpawnerName(Spawner type) {

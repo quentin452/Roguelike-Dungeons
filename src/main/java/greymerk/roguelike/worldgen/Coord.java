@@ -33,7 +33,6 @@ public class Coord {
     }
 
     public void add(Cardinal dir, int amount) {
-
         switch (dir) {
             case EAST:
                 x += amount;
@@ -53,7 +52,6 @@ public class Coord {
             case SOUTH:
                 z += amount;
                 return;
-
         }
     }
 
@@ -137,5 +135,4 @@ public class Coord {
 
         return true;
     }
-
 }

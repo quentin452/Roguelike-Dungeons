@@ -17,5 +17,4 @@ public class DungeonGenerator implements IWorldGenerator {
         IDungeon dungeon = new Dungeon(editor);
         dungeon.spawnInChunk(random, chunkX, chunkZ);
     }
-
 }

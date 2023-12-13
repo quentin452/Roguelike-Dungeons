@@ -282,40 +282,44 @@ public class DungeonsCrypt extends DungeonBase {
     }
 
     private void mausoleumWall(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir) {
-
         ITheme theme = settings.getTheme();
         IBlockFactory walls = theme.getPrimaryWall();
 
-        Coord cursor;
-        Coord start;
-        Coord end;
+        Coord start = new Coord(origin);
+        Coord end = new Coord(origin);
 
-        start = new Coord(origin);
-        end = new Coord(origin);
-        start.add(Cardinal.left(dir), 3);
-        end.add(Cardinal.right(dir), 3);
-        end.add(dir, 4);
-        end.add(Cardinal.UP, 4);
+        // Define the wall area
+        defineWallArea(start, end, dir);
+
+        // Fill the wall area with walls
         RectSolid.fill(editor, rand, start, end, walls);
 
-        cursor = new Coord(origin);
-        cursor.add(Cardinal.UP);
-        tomb(editor, rand, settings, cursor, dir);
+        Coord cursor = new Coord(origin);
+        addTomb(editor, rand, settings, cursor, dir);
 
-        cursor.add(Cardinal.UP, 2);
-        tomb(editor, rand, settings, cursor, dir);
-
+        // Add tombs for orthogonal directions
         for (Cardinal o : Cardinal.orthogonal(dir)) {
             cursor = new Coord(origin);
             cursor.add(Cardinal.UP);
             cursor.add(o, 2);
-            tomb(editor, rand, settings, cursor, dir);
-
-            cursor.add(Cardinal.UP, 2);
-            tomb(editor, rand, settings, cursor, dir);
+            addTomb(editor, rand, settings, cursor, dir);
         }
-
     }
+
+    private void defineWallArea(Coord start, Coord end, Cardinal dir) {
+        start.add(Cardinal.left(dir), 3);
+        end.add(Cardinal.right(dir), 3);
+        end.add(dir, 4);
+        end.add(Cardinal.UP, 4);
+    }
+
+    private void addTomb(IWorldEditor editor, Random rand, LevelSettings settings, Coord cursor, Cardinal dir) {
+        cursor.add(Cardinal.UP);
+        tomb(editor, rand, settings, cursor, dir);
+        cursor.add(Cardinal.UP, 2);
+        tomb(editor, rand, settings, cursor, dir);
+    }
+
 
     private void pillar(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin) {
 

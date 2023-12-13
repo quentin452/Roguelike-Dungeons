@@ -6,7 +6,6 @@ import java.util.Random;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
@@ -31,9 +30,9 @@ public class Dungeon implements IDungeon {
 
     public static SettingsResolver settingsResolver;
 
-    private DungeonGenerator generator;
+    private final DungeonGenerator generator;
     private Coord pos;
-    private IWorldEditor editor;
+    private final IWorldEditor editor;
 
     static {
         initResolver();
@@ -54,7 +53,7 @@ public class Dungeon implements IDungeon {
         for (int i = 0; i < attempts; i++) {
             Coord location = getNearbyCoord(rand, x, z, 40, 100);
 
-            if (!validLocation(rand, location.getX(), location.getZ())) continue;
+            if (!validLocation(location.getX(), location.getZ())) continue;
 
             ISettings setting = settingsResolver.getSettings(editor, rand, location);
 
@@ -106,7 +105,7 @@ public class Dungeon implements IDungeon {
                         + "Author: Greymerk\n\n"
                         + "Bits: Drainedsoul\n\n"
                         + "Ideas: Eniko @enichan");
-        treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<ItemStack>(book.get(), 1), 1);
+        treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<>(book.get(), 1), 1);
     }
 
     public static boolean canSpawnInChunk(int chunkX, int chunkZ, IWorldEditor editor) {
@@ -119,8 +118,8 @@ public class Dungeon implements IDungeon {
         int min = 8 * frequency / 10;
         int max = 32 * frequency / 10;
 
-        min = min < 2 ? 2 : min;
-        max = max < 8 ? 8 : max;
+        min = Math.max(min, 2);
+        max = Math.max(max, 8);
 
         int tempX = chunkX < 0 ? chunkX - (max - 1) : chunkX;
         int tempZ = chunkZ < 0 ? chunkZ - (max - 1) : chunkZ;
@@ -136,19 +135,13 @@ public class Dungeon implements IDungeon {
         m += r.nextInt(max - min);
         n += r.nextInt(max - min);
 
-        if (!(chunkX == m && chunkZ == n)) {
-            return false;
-        }
-
-        return true;
+        return chunkX == m && chunkZ == n;
     }
 
     public void spawnInChunk(Random rand, int chunkX, int chunkZ) {
-
         if (Dungeon.canSpawnInChunk(chunkX, chunkZ, editor)) {
             int x = chunkX * 16 + 4;
             int z = chunkZ * 16 + 4;
-
             generateNear(rand, x, z);
         }
     }
@@ -162,15 +155,9 @@ public class Dungeon implements IDungeon {
         return 0;
     }
 
-    public boolean validLocation(Random rand, int x, int z) {
-
-        BiomeGenBase biome = editor.getBiome(new Coord(x, 0, z));
-        Type[] biomeType = BiomeDictionary.getTypesForBiome(biome);
-        Type[] invalidBiomes = new Type[] { BiomeDictionary.Type.RIVER, BiomeDictionary.Type.BEACH,
-                BiomeDictionary.Type.MUSHROOM, BiomeDictionary.Type.OCEAN };
-
-        for (Type type : invalidBiomes) {
-            if (Arrays.asList(biomeType).contains(type)) return false;
+    public boolean validLocation(int x, int z) {
+        if (!isValidBiome(x, z)) {
+            return false;
         }
 
         int upperLimit = RogueConfig.getInt(RogueConfig.UPPERLIMIT);
@@ -178,28 +165,46 @@ public class Dungeon implements IDungeon {
 
         Coord cursor = new Coord(x, upperLimit, z);
 
-        if (!editor.isAirBlock(cursor)) {
+        if (!isAirBlockValid(cursor) || !isGroundValid(cursor, lowerLimit)) {
             return false;
         }
 
-        while (!editor.validGroundBlock(cursor)) {
-            cursor.add(Cardinal.DOWN);
-            if (cursor.getY() < lowerLimit) return false;
-            if (editor.getBlock(cursor).getMaterial() == Material.water) return false;
-        }
+        return isAreaValid(cursor);
+    }
 
-        for (Coord c : new RectSolid(
-                new Coord(x - 4, cursor.getY() + 4, z - 4),
-                new Coord(x + 4, cursor.getY() + 4, z + 4))) {
-            if (editor.validGroundBlock(c)) {
+    private boolean isValidBiome(int x, int z) {
+        BiomeGenBase biome = editor.getBiome(new Coord(x, 0, z));
+        Type[] biomeType = BiomeDictionary.getTypesForBiome(biome);
+        Type[] invalidBiomes = new Type[] { BiomeDictionary.Type.RIVER, BiomeDictionary.Type.BEACH,
+            BiomeDictionary.Type.MUSHROOM, BiomeDictionary.Type.OCEAN };
+
+        for (Type type : invalidBiomes) {
+            if (Arrays.asList(biomeType).contains(type)) {
                 return false;
             }
         }
+        return true;
+    }
 
+    private boolean isAirBlockValid(Coord cursor) {
+        return editor.isAirBlock(cursor);
+    }
+
+    private boolean isGroundValid(Coord cursor, int lowerLimit) {
+        while (!editor.validGroundBlock(cursor)) {
+            cursor.add(Cardinal.DOWN);
+            if (cursor.getY() < lowerLimit || editor.getBlock(cursor).getMaterial() == Material.water) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isAreaValid(Coord cursor) {
         int airCount = 0;
         for (Coord c : new RectSolid(
-                new Coord(x - 4, cursor.getY() - 3, z - 4),
-                new Coord(x + 4, cursor.getY() - 3, z + 4))) {
+            new Coord(cursor.getX() - 4, cursor.getY() - 3, cursor.getZ() - 4),
+            new Coord(cursor.getX() + 4, cursor.getY() - 3, cursor.getZ() + 4))) {
             if (!editor.validGroundBlock(c)) {
                 airCount++;
             }
@@ -207,7 +212,6 @@ public class Dungeon implements IDungeon {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -220,8 +224,7 @@ public class Dungeon implements IDungeon {
         int xOffset = (int) (Math.cos(angle) * distance);
         int zOffset = (int) (Math.sin(angle) * distance);
 
-        Coord nearby = new Coord(x + xOffset, 0, z + zOffset);
-        return nearby;
+        return new Coord(x + xOffset, 0, z + zOffset);
     }
 
     public static Random getRandom(IWorldEditor editor, int x, int z) {

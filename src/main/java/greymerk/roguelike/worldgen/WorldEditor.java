@@ -14,6 +14,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import greymerk.roguelike.treasure.ITreasureChest;
 import greymerk.roguelike.treasure.TreasureManager;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
+import net.minecraft.world.chunk.Chunk;
 
 public class WorldEditor implements IWorldEditor {
 
@@ -34,29 +35,62 @@ public class WorldEditor implements IWorldEditor {
     }
 
     public boolean setBlock(Coord pos, MetaBlock block, boolean fillAir, boolean replaceSolid) {
-        MetaBlock currentBlock = getBlock(pos);
-        if (currentBlock.getBlock() == CHEST_BLOCK || currentBlock.getBlock() == TRAPPED_CHEST_BLOCK || currentBlock.getBlock() == MOB_SPAWNER_BLOCK) {
+        if (!isChunkLoaded(pos)) {
             return false;
         }
 
-        boolean isAir = world.isAirBlock(pos.getX(), pos.getY(), pos.getZ());
-        if (!fillAir && isAir) {
-            return false;
-        }
-        if (!replaceSolid && !isAir) {
+        if (isInvalidBlock(pos)) {
             return false;
         }
 
+        if (!canSetBlock(pos, fillAir, replaceSolid)) {
+            return false;
+        }
 
-        world.setBlock(pos.getX(), pos.getY(), pos.getZ(), block.getBlock(), block.getMeta(), block.getFlag());
-
-        stats.merge(block.getBlock(), 1, Integer::sum);
+        performBlockPlacement(pos, block);
+        updateStats(block.getBlock());
 
         return true;
     }
 
-    @Override
+    private boolean isChunkLoaded(Coord pos) {
+        int chunkX = pos.getX() >> 4;
+        int chunkZ = pos.getZ() >> 4;
+        return world.getChunkProvider().chunkExists(chunkX, chunkZ);
+    }
+
+    private boolean isInvalidBlock(Coord pos) {
+        MetaBlock currentBlock = getBlock(pos);
+        return currentBlock.getBlock() == CHEST_BLOCK || currentBlock.getBlock() == TRAPPED_CHEST_BLOCK || currentBlock.getBlock() == MOB_SPAWNER_BLOCK;
+    }
+
+    private boolean canSetBlock(Coord pos, boolean fillAir, boolean replaceSolid) {
+        boolean isAir = world.isAirBlock(pos.getX(), pos.getY(), pos.getZ());
+        return (fillAir || !isAir) && (replaceSolid || isAir);
+    }
+
+    private void performBlockPlacement(Coord pos, MetaBlock block) {
+        int chunkX = pos.getX() >> 4;
+        int chunkZ = pos.getZ() >> 4;
+        Chunk chunk = world.getChunkFromChunkCoords(chunkX, chunkZ);
+
+        if (chunk != null && chunk.isChunkLoaded) {
+            world.setBlock(pos.getX(), pos.getY(), pos.getZ(), block.getBlock(), block.getMeta(), block.getFlag());
+        }
+    }
+
+    private void updateStats(Block block) {
+        stats.merge(block, 1, Integer::sum);
+    }
+
     public boolean isAirBlock(Coord pos) {
+        int chunkX = pos.getX() >> 4;
+        int chunkZ = pos.getZ() >> 4;
+
+        if (!world.getChunkProvider().chunkExists(chunkX, chunkZ)) {
+            return true;
+        }
+
         return world.isAirBlock(pos.getX(), pos.getY(), pos.getZ());
     }
 
@@ -119,15 +153,17 @@ public class WorldEditor implements IWorldEditor {
 
     @Override
     public MetaBlock getBlock(Coord pos) {
-        if (blockCache.containsKey(pos)) {
-            return blockCache.get(pos);
+        int chunkX = pos.getX() >> 4;
+        int chunkZ = pos.getZ() >> 4;
+
+        if (!world.getChunkProvider().chunkExists(chunkX, chunkZ)) {
+            return new MetaBlock(Blocks.air);
         }
 
-        MetaBlock block = new MetaBlock(world.getBlock(pos.getX(), pos.getY(), pos.getZ()));
-
-        blockCache.put(pos, block);
-
-        return block;
+        return blockCache.computeIfAbsent(pos, p -> {
+            Block block = world.getBlock(p.getX(), p.getY(), p.getZ());
+            return new MetaBlock(block);
+        });
     }
 
     @Override
