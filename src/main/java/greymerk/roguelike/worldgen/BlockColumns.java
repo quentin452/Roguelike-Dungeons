@@ -9,10 +9,10 @@ import com.google.gson.JsonElement;
 
 public class BlockColumns extends BlockBase {
 
-    private List<IBlockFactory> blocks;
+    private final List<IBlockFactory> blocks;
 
     public BlockColumns() {
-        blocks = new ArrayList<IBlockFactory>();
+        blocks = new ArrayList<>();
     }
 
     public BlockColumns(JsonElement data) {

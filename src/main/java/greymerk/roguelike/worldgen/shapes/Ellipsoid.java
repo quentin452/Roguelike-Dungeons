@@ -12,8 +12,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class Ellipsoid implements IShape {
 
-    private Coord start;
-    private Coord end;
+    private final Coord start;
+    private final Coord end;
 
     public Ellipsoid(Coord start, Coord end) {
         this.start = new Coord(start);
@@ -40,16 +40,16 @@ public class Ellipsoid implements IShape {
 
     @Override
     public List<Coord> get() {
-        List<Coord> copy = new ArrayList<Coord>();
+        List<Coord> copy = new ArrayList<>();
         for (Coord pos : this) {
             copy.add(pos);
         }
         return copy;
     }
 
-    private class EllipsoidIterator implements Iterator<Coord> {
+    private static class EllipsoidIterator implements Iterator<Coord> {
 
-        private Coord centre;
+        private final Coord centre;
         private Coord diff;
         private Coord cursor;
 

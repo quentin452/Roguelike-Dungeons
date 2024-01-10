@@ -12,8 +12,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class RectSolid implements IShape {
 
-    private Coord start;
-    private Coord end;
+    private final Coord start;
+    private final Coord end;
 
     public RectSolid(Coord start, Coord end) {
         this.start = start;
@@ -46,7 +46,7 @@ public class RectSolid implements IShape {
 
     @Override
     public List<Coord> get() {
-        List<Coord> coords = new ArrayList<Coord>();
+        List<Coord> coords = new ArrayList<>();
 
         for (Coord c : this) {
             coords.add(c);
@@ -60,7 +60,7 @@ public class RectSolid implements IShape {
         return new RectSolidIterator(this.start, this.end);
     }
 
-    private class RectSolidIterator implements Iterator<Coord> {
+    private static class RectSolidIterator implements Iterator<Coord> {
 
         Coord cursor;
         Coord c1;

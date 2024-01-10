@@ -12,8 +12,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class RectPyramid implements IShape {
 
-    private Coord start;
-    private Coord end;
+    private final Coord start;
+    private final Coord end;
 
     public RectPyramid(Coord start, Coord end) {
         this.start = new Coord(start);
@@ -40,14 +40,14 @@ public class RectPyramid implements IShape {
 
     @Override
     public List<Coord> get() {
-        List<Coord> shape = new ArrayList<Coord>();
+        List<Coord> shape = new ArrayList<>();
         for (Coord pos : this) {
             shape.add(pos);
         }
         return shape;
     }
 
-    private class SquarePyramidIterator implements Iterator<Coord> {
+    private static class SquarePyramidIterator implements Iterator<Coord> {
 
         Coord start;
         Coord diff;
@@ -132,11 +132,7 @@ public class RectPyramid implements IShape {
                 return false;
             }
 
-            if (!(cursor.getZ() < Math.tan(thetaZ) * y)) {
-                return false;
-            }
-
-            return true;
+            return cursor.getZ() < Math.tan(thetaZ) * y;
 
         }
 

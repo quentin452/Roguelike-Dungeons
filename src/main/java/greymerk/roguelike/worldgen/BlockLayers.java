@@ -9,10 +9,10 @@ import com.google.gson.JsonElement;
 
 public class BlockLayers extends BlockBase {
 
-    private List<IBlockFactory> blocks;
+    private final List<IBlockFactory> blocks;
 
     public BlockLayers() {
-        blocks = new ArrayList<IBlockFactory>();
+        blocks = new ArrayList<>();
     }
 
     public BlockLayers(JsonElement data) {

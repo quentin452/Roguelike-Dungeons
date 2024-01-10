@@ -12,14 +12,14 @@ import greymerk.roguelike.util.WeightedRandomizer;
 
 public class ItemFood extends ItemBase {
 
-    private Map<Integer, WeightedRandomizer<ItemStack>> loot;
+    private final Map<Integer, WeightedRandomizer<ItemStack>> loot;
 
     public ItemFood(int weight, int level) {
         super(weight, level);
-        this.loot = new HashMap<Integer, WeightedRandomizer<ItemStack>>();
+        this.loot = new HashMap<>();
         for (int i = 0; i < 5; ++i) {
 
-            WeightedRandomizer<ItemStack> randomizer = new WeightedRandomizer<ItemStack>();
+            WeightedRandomizer<ItemStack> randomizer = new WeightedRandomizer<>();
 
             switch (i) {
                 case 4:

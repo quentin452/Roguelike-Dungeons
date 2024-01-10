@@ -51,7 +51,6 @@ public class Coord {
                 return;
             case SOUTH:
                 z += amount;
-                return;
         }
     }
 
@@ -127,12 +126,9 @@ public class Coord {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Coord other = (Coord) o;
-
-        if (x != other.x) return false;
-        if (y != other.y) return false;
-        if (z != other.z) return false;
-
-        return true;
+        return x == other.x && y == other.y && z == other.z;
     }
 }

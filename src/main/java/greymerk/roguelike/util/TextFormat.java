@@ -26,11 +26,11 @@ public enum TextFormat {
     RESET;
 
     public static String apply(String text, TextFormat option) {
-        return "\u00A7" + getCodeChar(option) + text;
+        return "§" + getCodeChar(option) + text;
     }
 
     public static String getCode(TextFormat option) {
-        return "\u00A7" + getCodeChar(option);
+        return "§" + getCodeChar(option);
     }
 
     public static char getCodeChar(TextFormat option) {

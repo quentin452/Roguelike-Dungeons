@@ -1,6 +1,7 @@
 package greymerk.roguelike.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ArgumentParser {
@@ -8,12 +9,8 @@ public class ArgumentParser {
     List<String> args;
 
     public ArgumentParser(String[] args) {
-
-        this.args = new ArrayList<String>();
-
-        for (int i = 0; i < args.length; ++i) {
-            this.args.add((String) args[i]);
-        }
+        this.args = new ArrayList<>();
+        Collections.addAll(this.args, args);
     }
 
     public boolean hasEntry(int index) {
@@ -23,8 +20,7 @@ public class ArgumentParser {
     public boolean match(int index, String toCompare) {
 
         if (!this.hasEntry(index)) return false;
-        if (!this.args.get(index).equals(toCompare)) return false;
-        return true;
+        return this.args.get(index).equals(toCompare);
     }
 
     public String get(int index) {

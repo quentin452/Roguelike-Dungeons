@@ -26,7 +26,7 @@ public class SettingsDesertTheme extends DungeonSettings {
     public SettingsDesertTheme() {
 
         this.criteria = new SpawnCriteria();
-        List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+        List<BiomeDictionary.Type> biomes = new ArrayList<>();
         biomes.add(BiomeDictionary.Type.SANDY);
         this.criteria.setBiomeTypes(biomes);
 

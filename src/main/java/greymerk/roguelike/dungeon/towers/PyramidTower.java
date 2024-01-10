@@ -258,8 +258,8 @@ public class PyramidTower implements ITower {
         for (Cardinal o : orth) {
             Coord c2 = new Coord(pos);
             for (int i = 0; i < 5; ++i) {
+                cursor = new Coord(c2);
                 if (i % 2 == 0) {
-                    cursor = new Coord(c2);
                     cursor.add(Cardinal.UP, 5);
                     blocks.set(editor, rand, cursor);
 
@@ -269,7 +269,6 @@ public class PyramidTower implements ITower {
                     end.add(Cardinal.UP, 2);
                     RectSolid.fill(editor, rand, start, end, air);
                 } else {
-                    cursor = new Coord(c2);
                     cursor.add(dir);
                     blocks.set(editor, rand, cursor);
                     cursor.add(Cardinal.UP);

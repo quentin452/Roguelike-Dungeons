@@ -34,13 +34,11 @@ public enum Crops {
     }
 
     public static MetaBlock getCocao(Cardinal dir) {
-        MetaBlock cocao = new MetaBlock(Blocks.cocoa, dirMeta(Cardinal.reverse(dir)) + 12);
-        return cocao;
+        return new MetaBlock(Blocks.cocoa, dirMeta(Cardinal.reverse(dir)) + 12);
     }
 
     public static MetaBlock getPumpkin(Cardinal dir, boolean lit) {
-        MetaBlock pumpkin = new MetaBlock(lit ? Blocks.lit_pumpkin : Blocks.pumpkin, dirMeta(Cardinal.reverse(dir)));
-        return pumpkin;
+        return new MetaBlock(lit ? Blocks.lit_pumpkin : Blocks.pumpkin, dirMeta(Cardinal.reverse(dir)));
     }
 
     public static int dirMeta(Cardinal dir) {

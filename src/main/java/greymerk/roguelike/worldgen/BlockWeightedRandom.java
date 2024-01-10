@@ -11,10 +11,10 @@ import greymerk.roguelike.util.WeightedRandomizer;
 
 public class BlockWeightedRandom extends BlockBase {
 
-    private WeightedRandomizer<IBlockFactory> blocks;
+    private final WeightedRandomizer<IBlockFactory> blocks;
 
     public BlockWeightedRandom() {
-        blocks = new WeightedRandomizer<IBlockFactory>();
+        blocks = new WeightedRandomizer<>();
     }
 
     public BlockWeightedRandom(JsonElement data) {
@@ -28,7 +28,7 @@ public class BlockWeightedRandom extends BlockBase {
     }
 
     public void addBlock(IBlockFactory toAdd, int weight) {
-        blocks.add(new WeightedChoice<IBlockFactory>(toAdd, weight));
+        blocks.add(new WeightedChoice<>(toAdd, weight));
     }
 
     @Override

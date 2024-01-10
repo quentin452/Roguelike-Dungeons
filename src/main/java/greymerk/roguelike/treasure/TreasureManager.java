@@ -13,7 +13,7 @@ public class TreasureManager {
     List<ITreasureChest> chests;
 
     public TreasureManager() {
-        this.chests = new ArrayList<ITreasureChest>();
+        this.chests = new ArrayList<>();
     }
 
     public void add(ITreasureChest toAdd) {
@@ -74,7 +74,7 @@ public class TreasureManager {
     }
 
     public List<ITreasureChest> getChests(Treasure type, int level) {
-        ArrayList<ITreasureChest> c = new ArrayList<ITreasureChest>();
+        ArrayList<ITreasureChest> c = new ArrayList<>();
         for (ITreasureChest chest : this.chests) {
             if (chest.getType() == type && chest.getLevel() == level) c.add(chest);
         }
@@ -82,7 +82,7 @@ public class TreasureManager {
     }
 
     public List<ITreasureChest> getChests(Treasure type) {
-        ArrayList<ITreasureChest> c = new ArrayList<ITreasureChest>();
+        ArrayList<ITreasureChest> c = new ArrayList<>();
         for (ITreasureChest chest : this.chests) {
             if (chest.getType() == type) c.add(chest);
         }
@@ -90,7 +90,7 @@ public class TreasureManager {
     }
 
     public List<ITreasureChest> getChests(int level) {
-        ArrayList<ITreasureChest> c = new ArrayList<ITreasureChest>();
+        ArrayList<ITreasureChest> c = new ArrayList<>();
         for (ITreasureChest chest : this.chests) {
             if (chest.getType() == Treasure.EMPTY) continue;
             if (chest.getLevel() == level) c.add(chest);

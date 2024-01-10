@@ -9,8 +9,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface IAlcove {
 
-    public void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord pos, Cardinal dir);
+    void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord pos, Cardinal dir);
 
-    public boolean isValidLocation(IWorldEditor editor, Coord pos, Cardinal dir);
+    boolean isValidLocation(IWorldEditor editor, Coord pos, Cardinal dir);
 
 }

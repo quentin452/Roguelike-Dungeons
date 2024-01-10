@@ -363,7 +363,7 @@ public class JungleTower implements ITower {
     }
 
     private void decorate(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
-        List<Coord> spots = new ArrayList<Coord>();
+        List<Coord> spots = new ArrayList<>();
         for (Cardinal dir : Cardinal.directions) {
             Coord cursor = new Coord(origin);
             cursor.add(Cardinal.UP, 6);

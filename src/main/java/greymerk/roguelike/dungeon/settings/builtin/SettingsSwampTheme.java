@@ -26,7 +26,7 @@ public class SettingsSwampTheme extends DungeonSettings {
     public SettingsSwampTheme() {
 
         this.criteria = new SpawnCriteria();
-        List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+        List<BiomeDictionary.Type> biomes = new ArrayList<>();
         biomes.add(BiomeDictionary.Type.SWAMP);
         this.criteria.setBiomeTypes(biomes);
 

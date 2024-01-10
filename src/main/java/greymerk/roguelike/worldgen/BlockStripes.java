@@ -9,10 +9,10 @@ import com.google.gson.JsonElement;
 
 public class BlockStripes extends BlockBase {
 
-    private List<IBlockFactory> blocks;
+    private final List<IBlockFactory> blocks;
 
     public BlockStripes() {
-        blocks = new ArrayList<IBlockFactory>();
+        blocks = new ArrayList<>();
     }
 
     public BlockStripes(JsonElement data) {

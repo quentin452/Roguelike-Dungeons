@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class WeightedChoice<T> implements IWeighted<T> {
 
-    private T item;
-    private int weight;
+    private final T item;
+    private final int weight;
 
     public WeightedChoice(T toAdd, int weight) {
         item = toAdd;

@@ -18,8 +18,7 @@ public enum ColorBlock {
     public static MetaBlock get(ColorBlock type, DyeColor color) {
         Block b = getBlock(type);
         int c = DyeColor.get(color);
-        MetaBlock block = new MetaBlock(b, c);
-        return block;
+        return new MetaBlock(b, c);
     }
 
     public static MetaBlock get(ColorBlock type, Random rand) {

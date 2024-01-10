@@ -23,7 +23,7 @@ public class MinimumSpanningTree extends Graph {
     public MinimumSpanningTree(Random rand, int size, int edgeLength, Coord origin) {
         super(rand, size, edgeLength, origin);
 
-        mstEdges = new HashSet<Edge>();
+        mstEdges = new HashSet<>();
 
         Collections.sort(edges);
 
@@ -73,8 +73,6 @@ public class MinimumSpanningTree extends Graph {
     }
 
     public List<Edge> getEdges() {
-        List<Edge> toReturn = new ArrayList<Edge>();
-        toReturn.addAll(this.mstEdges);
-        return toReturn;
+        return new ArrayList<>(this.mstEdges);
     }
 }

@@ -10,10 +10,10 @@ import greymerk.roguelike.util.IWeighted;
 
 public class LootRule {
 
-    private Treasure type;
-    private IWeighted<ItemStack> item;
+    private final Treasure type;
+    private final IWeighted<ItemStack> item;
     int level;
-    private boolean toEach;
+    private final boolean toEach;
     int amount;
 
     public LootRule(Treasure type, IWeighted<ItemStack> item, int level, boolean toEach, int amount) {

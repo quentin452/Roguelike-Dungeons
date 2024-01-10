@@ -96,7 +96,6 @@ public enum JsonNBT {
                 return;
             case INTARRAY:
                 nbt.setTag(name, new NBTTagIntArray(jsonToIntArray(data.getAsJsonObject())));
-                return;
         }
     }
 
@@ -136,7 +135,6 @@ public enum JsonNBT {
                 return;
             case INTARRAY:
                 nbt.appendTag(new NBTTagIntArray(jsonToIntArray(data.getAsJsonObject())));
-                return;
         }
     }
 

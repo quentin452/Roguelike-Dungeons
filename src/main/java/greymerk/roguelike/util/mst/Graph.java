@@ -18,7 +18,7 @@ public class Graph {
 
     public Graph(Random rand, int size, int edgeLength, Coord origin) {
 
-        points = new ArrayList<Point>();
+        points = new ArrayList<>();
 
         int offset = size / 2 * edgeLength;
 
@@ -35,7 +35,7 @@ public class Graph {
             }
         }
 
-        edges = new ArrayList<Edge>();
+        edges = new ArrayList<>();
         for (Point p : points) {
             for (Point o : points) {
                 if (p.equals(o)) continue;
@@ -46,7 +46,7 @@ public class Graph {
 
     public List<Coord> getPointPositions() {
 
-        List<Coord> positions = new ArrayList<Coord>();
+        List<Coord> positions = new ArrayList<>();
 
         for (Point p : points) {
             Coord toAdd = p.getPosition();

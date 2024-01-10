@@ -22,7 +22,7 @@ public class SettingsJungleTheme extends DungeonSettings {
     public SettingsJungleTheme() {
 
         this.criteria = new SpawnCriteria();
-        List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+        List<BiomeDictionary.Type> biomes = new ArrayList<>();
         biomes.add(BiomeDictionary.Type.JUNGLE);
         this.criteria.setBiomeTypes(biomes);
 

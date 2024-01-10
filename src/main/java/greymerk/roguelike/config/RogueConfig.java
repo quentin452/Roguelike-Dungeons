@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import net.minecraft.util.Tuple;
 
@@ -86,7 +87,7 @@ public enum RogueConfig {
             case GENEROUS:
                 return new Tuple(getName(option), true);
             case DIMENSIONWL:
-                List<Integer> wl = new ArrayList<Integer>();
+                List<Integer> wl = new ArrayList<>();
                 wl.add(0);
                 return new Tuple(getName(option), wl);
             case DIMENSIONBL:
@@ -108,37 +109,38 @@ public enum RogueConfig {
 
     @SuppressWarnings("unchecked")
     private static void setDefaults() {
-        if (!instance.ContainsKey(getName(DONATURALSPAWN)))
-            setBoolean(DONATURALSPAWN, (Boolean) getDefault(DONATURALSPAWN).getSecond());
-        if (!instance.ContainsKey(getName(DONOVELTYSPAWN)))
-            setBoolean(DONOVELTYSPAWN, (Boolean) getDefault(DONOVELTYSPAWN).getSecond());
-        if (!instance.ContainsKey(getName(LEVELRANGE)))
-            setInt(LEVELRANGE, (Integer) getDefault(LEVELRANGE).getSecond());
-        if (!instance.ContainsKey(getName(LEVELMAXROOMS)))
-            setInt(LEVELMAXROOMS, (Integer) getDefault(LEVELMAXROOMS).getSecond());
-        if (!instance.ContainsKey(getName(LEVELSCATTER)))
-            setInt(LEVELSCATTER, (Integer) getDefault(LEVELSCATTER).getSecond());
-        if (!instance.ContainsKey(getName(SPAWNFREQUENCY)))
-            setInt(SPAWNFREQUENCY, (Integer) getDefault(SPAWNFREQUENCY).getSecond());
-        if (!instance.ContainsKey(getName(GENEROUS))) setBoolean(GENEROUS, (Boolean) getDefault(GENEROUS).getSecond());
-        if (!instance.ContainsKey(getName(DIMENSIONWL)))
-            setIntList(DIMENSIONWL, (List<Integer>) getDefault(DIMENSIONWL).getSecond());
-        if (!instance.ContainsKey(getName(DIMENSIONBL)))
-            setIntList(DIMENSIONBL, (List<Integer>) getDefault(DIMENSIONBL).getSecond());
-        if (!instance.ContainsKey(getName(PRECIOUSBLOCKS)))
-            setBoolean(PRECIOUSBLOCKS, (Boolean) getDefault(PRECIOUSBLOCKS).getSecond());
-        if (!instance.ContainsKey(getName(LOOTING))) setDouble(LOOTING, (Double) getDefault(LOOTING).getSecond());
-        if (!instance.ContainsKey(getName(UPPERLIMIT)))
-            setInt(UPPERLIMIT, (Integer) getDefault(UPPERLIMIT).getSecond());
-        if (!instance.ContainsKey(getName(LOWERLIMIT)))
-            setInt(LOWERLIMIT, (Integer) getDefault(LOWERLIMIT).getSecond());
-        if (!instance.ContainsKey(getName(ROGUESPAWNERS)))
-            setBoolean(ROGUESPAWNERS, (Boolean) getDefault(ROGUESPAWNERS).getSecond());
+        if (instance.ContainsKey(getName(DONATURALSPAWN)))
+            setBoolean(DONATURALSPAWN, (Boolean) Objects.requireNonNull(getDefault(DONATURALSPAWN)).getSecond());
+        if (instance.ContainsKey(getName(DONOVELTYSPAWN)))
+            setBoolean(DONOVELTYSPAWN, (Boolean) Objects.requireNonNull(getDefault(DONOVELTYSPAWN)).getSecond());
+        if (instance.ContainsKey(getName(LEVELRANGE)))
+            setInt(LEVELRANGE, (Integer) Objects.requireNonNull(getDefault(LEVELRANGE)).getSecond());
+        if (instance.ContainsKey(getName(LEVELMAXROOMS)))
+            setInt(LEVELMAXROOMS, (Integer) Objects.requireNonNull(getDefault(LEVELMAXROOMS)).getSecond());
+        if (instance.ContainsKey(getName(LEVELSCATTER)))
+            setInt(LEVELSCATTER, (Integer) Objects.requireNonNull(getDefault(LEVELSCATTER)).getSecond());
+        if (instance.ContainsKey(getName(SPAWNFREQUENCY)))
+            setInt(SPAWNFREQUENCY, (Integer) Objects.requireNonNull(getDefault(SPAWNFREQUENCY)).getSecond());
+        if (instance.ContainsKey(getName(GENEROUS))) setBoolean(GENEROUS, (Boolean) Objects.requireNonNull(getDefault(GENEROUS)).getSecond());
+        if (instance.ContainsKey(getName(DIMENSIONWL)))
+            setIntList(DIMENSIONWL, (List<Integer>) Objects.requireNonNull(getDefault(DIMENSIONWL)).getSecond());
+        if (instance.ContainsKey(getName(DIMENSIONBL)))
+            setIntList(DIMENSIONBL, (List<Integer>) Objects.requireNonNull(getDefault(DIMENSIONBL)).getSecond());
+        if (instance.ContainsKey(getName(PRECIOUSBLOCKS)))
+            setBoolean(PRECIOUSBLOCKS, (Boolean) Objects.requireNonNull(getDefault(PRECIOUSBLOCKS)).getSecond());
+        if (instance.ContainsKey(getName(LOOTING))) setDouble(LOOTING, (Double) Objects.requireNonNull(getDefault(LOOTING)).getSecond());
+        if (instance.ContainsKey(getName(UPPERLIMIT)))
+            setInt(UPPERLIMIT, (Integer) Objects.requireNonNull(getDefault(UPPERLIMIT)).getSecond());
+        if (instance.ContainsKey(getName(LOWERLIMIT)))
+            setInt(LOWERLIMIT, (Integer) Objects.requireNonNull(getDefault(LOWERLIMIT)).getSecond());
+        if (instance.ContainsKey(getName(ROGUESPAWNERS)))
+            setBoolean(ROGUESPAWNERS, (Boolean) Objects.requireNonNull(getDefault(ROGUESPAWNERS)).getSecond());
     }
 
     public static double getDouble(RogueConfig option) {
         reload(false);
         Tuple def = getDefault(option);
+        assert def != null;
         return instance.GetDouble(getName(option), (Double) def.getSecond());
     }
 
@@ -150,6 +152,7 @@ public enum RogueConfig {
     public static boolean getBoolean(RogueConfig option) {
         reload(false);
         Tuple def = getDefault(option);
+        assert def != null;
         return instance.GetBoolean(getName(option), (Boolean) def.getSecond());
     }
 
@@ -161,12 +164,14 @@ public enum RogueConfig {
     public static int getInt(RogueConfig option) {
         reload(false);
         Tuple def = getDefault(option);
+        assert def != null;
         return instance.GetInteger((String) def.getFirst(), (Integer) def.getSecond());
     }
 
     public static void setInt(RogueConfig option, int value) {
         reload(false);
         Tuple def = getDefault(option);
+        assert def != null;
         instance.Set((String) def.getFirst(), value);
     }
 
@@ -174,12 +179,14 @@ public enum RogueConfig {
     public static List<Integer> getIntList(RogueConfig option) {
         reload(false);
         Tuple def = getDefault(option);
+        assert def != null;
         return instance.GetListInteger((String) def.getFirst(), (ArrayList<Integer>) def.getSecond());
     }
 
     public static void setIntList(RogueConfig option, List<Integer> value) {
         reload(false);
         Tuple def = getDefault(option);
+        assert def != null;
         instance.Set((String) def.getFirst(), value);
     }
 

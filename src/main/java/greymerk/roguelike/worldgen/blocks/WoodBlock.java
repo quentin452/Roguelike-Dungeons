@@ -5,6 +5,6 @@ public enum WoodBlock {
     LOG,
     PLANK,
     FENCE,
-    SAPLING;
+    SAPLING
 
 }

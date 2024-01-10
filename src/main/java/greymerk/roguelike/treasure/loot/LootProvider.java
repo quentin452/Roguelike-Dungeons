@@ -12,7 +12,7 @@ public class LootProvider implements ILoot {
     Map<Integer, LootSettings> loot;
 
     public LootProvider() {
-        loot = new HashMap<Integer, LootSettings>();
+        loot = new HashMap<>();
     }
 
     public void put(int level, LootSettings settings) {

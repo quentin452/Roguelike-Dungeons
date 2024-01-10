@@ -10,10 +10,10 @@ import greymerk.roguelike.worldgen.MetaStair;
 
 public class BlockSet implements IBlockSet {
 
-    private IBlockFactory floor;
-    private IBlockFactory walls;
-    private IStair stair;
-    private IBlockFactory pillar;
+    private final IBlockFactory floor;
+    private final IBlockFactory walls;
+    private final IStair stair;
+    private final IBlockFactory pillar;
 
     public BlockSet(IBlockFactory floor, IBlockFactory walls, IStair stair, IBlockFactory pillar) {
         this.floor = floor;

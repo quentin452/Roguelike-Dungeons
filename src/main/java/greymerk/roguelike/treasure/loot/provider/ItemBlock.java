@@ -11,11 +11,11 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class ItemBlock extends ItemBase {
 
-    private WeightedRandomizer<ItemStack> loot;
+    private final WeightedRandomizer<ItemStack> loot;
 
     public ItemBlock(int weight, int level) {
         super(weight, level);
-        this.loot = new WeightedRandomizer<ItemStack>();
+        this.loot = new WeightedRandomizer<>();
         this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.ANDESITE_POLISHED).getBlock(), 0, 8, 32, 1));
         this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.GRANITE_POLISHED).getBlock(), 0, 8, 32, 1));
         this.loot.add(new WeightedRandomLoot(BlockType.get(BlockType.DIORITE_POLISHED).getBlock(), 0, 8, 32, 1));

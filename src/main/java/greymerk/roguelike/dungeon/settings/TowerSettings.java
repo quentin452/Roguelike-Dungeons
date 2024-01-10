@@ -10,8 +10,8 @@ import greymerk.roguelike.theme.ThemeOak;
 
 public class TowerSettings {
 
-    private Tower tower;
-    private ITheme theme;
+    private final Tower tower;
+    private final ITheme theme;
 
     public TowerSettings(Tower tower, ITheme theme) {
         this.tower = tower;

@@ -44,15 +44,8 @@ public class DungeonLevel implements IDungeonLevel {
 
     @Override
     public boolean hasNearbyNode(Coord pos) {
-
-        for (DungeonNode node : this.getNodes()) {
-            int dist = (int) node.getPosition().distance(pos);
-
-            if (dist < node.getSize()) {
-                return true;
-            }
-        }
-        return false;
+        return getNodes().stream()
+            .anyMatch(node -> node.getPosition().distance(pos) < node.getSize());
     }
 
     @Override

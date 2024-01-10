@@ -173,10 +173,9 @@ public enum Theme {
 
         if (json.has("base")) {
             theme = Theme.getTheme(Theme.valueOf(json.get("base").getAsString()));
-            return new ThemeBase((ThemeBase) theme, primary, secondary);
         } else {
             theme = Theme.getTheme(Theme.OAK);
-            return new ThemeBase((ThemeBase) theme, primary, secondary);
         }
+        return new ThemeBase((ThemeBase) theme, primary, secondary);
     }
 }

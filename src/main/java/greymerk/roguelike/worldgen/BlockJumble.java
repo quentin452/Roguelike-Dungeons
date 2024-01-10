@@ -9,10 +9,10 @@ import com.google.gson.JsonElement;
 
 public class BlockJumble extends BlockBase {
 
-    private List<IBlockFactory> blocks;
+    private final List<IBlockFactory> blocks;
 
     public BlockJumble() {
-        blocks = new ArrayList<IBlockFactory>();
+        blocks = new ArrayList<>();
     }
 
     public BlockJumble(JsonElement data) {

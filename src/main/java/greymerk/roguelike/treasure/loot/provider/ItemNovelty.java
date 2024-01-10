@@ -47,7 +47,7 @@ public enum ItemNovelty {
 
     public static final Map<String, ItemNovelty> names;
     static {
-        names = new HashMap<String, ItemNovelty>();
+        names = new HashMap<>();
         names.put("greymerk", ItemNovelty.GREYMERK);
         names.put("nebriscrown", ItemNovelty.NEBRISCROWN);
         names.put("nebrissword", ItemNovelty.NULL);
@@ -76,7 +76,7 @@ public enum ItemNovelty {
         names.put("grim", ItemNovelty.GRIM);
         names.put("mmillss", ItemNovelty.MMILLSS);
         names.put("valandrah", ItemNovelty.VALANDRAH);
-    };
+    }
 
     public static ItemStack getItemByName(String name) {
         if (!names.containsKey(name)) return null;
@@ -84,7 +84,7 @@ public enum ItemNovelty {
     }
 
     public static IWeighted<ItemStack> get(ItemNovelty choice) {
-        return new WeightedChoice<ItemStack>(getItem(choice), 0);
+        return new WeightedChoice<>(getItem(choice), 0);
     }
 
     public static ItemStack getItem(ItemNovelty choice) {

@@ -20,16 +20,16 @@ public class LevelGeneratorMST implements ILevelGenerator {
     IDungeonLevel level;
     private DungeonNode end;
 
-    private List<DungeonNode> nodes;
-    private List<DungeonTunnel> tunnels;
+    private final List<DungeonNode> nodes;
+    private final List<DungeonTunnel> tunnels;
 
     public LevelGeneratorMST(IWorldEditor editor, Random rand, IDungeonLevel level) {
         this.editor = editor;
         this.rand = rand;
         this.level = level;
 
-        nodes = new ArrayList<DungeonNode>();
-        tunnels = new ArrayList<DungeonTunnel>();
+        nodes = new ArrayList<>();
+        tunnels = new ArrayList<>();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class LevelGeneratorMST implements ILevelGenerator {
         MinimumSpanningTree mst = new MinimumSpanningTree(rand, 7, 17, new Coord(start));
         List<Edge> edges = mst.getEdges();
         List<Coord> vertices = mst.getPointPositions();
-        List<Edge> used = new ArrayList<Edge>();
+        List<Edge> used = new ArrayList<>();
 
         for (Coord c : vertices) {
             for (Edge e : edges) {
@@ -58,7 +58,7 @@ public class LevelGeneratorMST implements ILevelGenerator {
         DungeonNode startDungeonNode = null;
 
         for (Coord c : vertices) {
-            List<Cardinal> entrances = new ArrayList<Cardinal>();
+            List<Cardinal> entrances = new ArrayList<>();
             for (DungeonTunnel tunnel : this.tunnels) {
                 Coord[] ends = tunnel.getEnds();
                 if (ends[0].equals(c)) {

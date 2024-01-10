@@ -30,10 +30,10 @@ import greymerk.roguelike.util.WeightedRandomizer;
 
 public class LootSettings {
 
-    private Map<Loot, IWeighted<ItemStack>> loot;
+    private final Map<Loot, IWeighted<ItemStack>> loot;
 
     public LootSettings(int level) {
-        loot = new HashMap<Loot, IWeighted<ItemStack>>();
+        loot = new HashMap<>();
         loot.put(Loot.WEAPON, new ItemWeapon(0, level));
         loot.put(Loot.ARMOUR, new ItemArmour(0, level));
         loot.put(Loot.BLOCK, new ItemBlock(0, level));
@@ -52,18 +52,18 @@ public class LootSettings {
     }
 
     public LootSettings(LootSettings toCopy) {
-        this.loot = new HashMap<Loot, IWeighted<ItemStack>>();
+        this.loot = new HashMap<>();
         this.loot.putAll(toCopy.loot);
     }
 
     public LootSettings(LootSettings base, LootSettings override) {
-        this.loot = new HashMap<Loot, IWeighted<ItemStack>>();
+        this.loot = new HashMap<>();
         if (base != null) this.loot.putAll(base.loot);
         if (override != null) this.loot.putAll(override.loot);
     }
 
     public LootSettings(JsonObject data) {
-        this.loot = new HashMap<Loot, IWeighted<ItemStack>>();
+        this.loot = new HashMap<>();
         for (Loot type : Loot.values()) {
             if (data.has(type.toString())) {
                 JsonElement providerData = data.get(type.toString());
@@ -79,7 +79,7 @@ public class LootSettings {
 
                 if (providerData.isJsonArray()) {
 
-                    WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>(0);
+                    WeightedRandomizer<ItemStack> items = new WeightedRandomizer<>(0);
                     JsonArray lootList = providerData.getAsJsonArray();
 
                     for (JsonElement e : lootList) {
@@ -107,7 +107,7 @@ public class LootSettings {
 
         JsonArray lootList = loot.getAsJsonArray();
 
-        WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>(weight);
+        WeightedRandomizer<ItemStack> items = new WeightedRandomizer<>(weight);
 
         for (JsonElement e : lootList) {
             items.add(parseProvider(e.getAsJsonObject()));

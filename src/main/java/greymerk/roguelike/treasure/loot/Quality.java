@@ -16,131 +16,131 @@ public enum Quality {
     GOLD,
     DIAMOND;
 
-    private static Map<Integer, IWeighted<Quality>> armourQuality;
-    private static Map<Integer, IWeighted<Quality>> weaponQuality;
-    private static Map<Integer, IWeighted<Quality>> toolQuality;
+    private static final Map<Integer, IWeighted<Quality>> armourQuality;
+    private static final Map<Integer, IWeighted<Quality>> weaponQuality;
+    private static final Map<Integer, IWeighted<Quality>> toolQuality;
     static {
-        armourQuality = new HashMap<Integer, IWeighted<Quality>>();
-        weaponQuality = new HashMap<Integer, IWeighted<Quality>>();
-        toolQuality = new HashMap<Integer, IWeighted<Quality>>();
+        armourQuality = new HashMap<>();
+        weaponQuality = new HashMap<>();
+        toolQuality = new HashMap<>();
 
         for (int i = 0; i < 5; ++i) {
-            WeightedRandomizer<Quality> armour = new WeightedRandomizer<Quality>();
+            WeightedRandomizer<Quality> armour = new WeightedRandomizer<>();
             switch (i) {
                 case 0:
-                    armour.add(new WeightedChoice<Quality>(WOOD, 200));
-                    armour.add(new WeightedChoice<Quality>(STONE, 50));
-                    armour.add(new WeightedChoice<Quality>(IRON, 10));
-                    armour.add(new WeightedChoice<Quality>(GOLD, 3));
-                    armour.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    armour.add(new WeightedChoice<>(WOOD, 200));
+                    armour.add(new WeightedChoice<>(STONE, 50));
+                    armour.add(new WeightedChoice<>(IRON, 10));
+                    armour.add(new WeightedChoice<>(GOLD, 3));
+                    armour.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 1:
-                    armour.add(new WeightedChoice<Quality>(WOOD, 100));
-                    armour.add(new WeightedChoice<Quality>(STONE, 30));
-                    armour.add(new WeightedChoice<Quality>(IRON, 10));
-                    armour.add(new WeightedChoice<Quality>(GOLD, 3));
-                    armour.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    armour.add(new WeightedChoice<>(WOOD, 100));
+                    armour.add(new WeightedChoice<>(STONE, 30));
+                    armour.add(new WeightedChoice<>(IRON, 10));
+                    armour.add(new WeightedChoice<>(GOLD, 3));
+                    armour.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 2:
-                    armour.add(new WeightedChoice<Quality>(WOOD, 50));
-                    armour.add(new WeightedChoice<Quality>(STONE, 20));
-                    armour.add(new WeightedChoice<Quality>(IRON, 10));
-                    armour.add(new WeightedChoice<Quality>(GOLD, 3));
-                    armour.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    armour.add(new WeightedChoice<>(WOOD, 50));
+                    armour.add(new WeightedChoice<>(STONE, 20));
+                    armour.add(new WeightedChoice<>(IRON, 10));
+                    armour.add(new WeightedChoice<>(GOLD, 3));
+                    armour.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 3:
-                    armour.add(new WeightedChoice<Quality>(WOOD, 1));
-                    armour.add(new WeightedChoice<Quality>(STONE, 3));
-                    armour.add(new WeightedChoice<Quality>(IRON, 5));
-                    armour.add(new WeightedChoice<Quality>(GOLD, 3));
-                    armour.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    armour.add(new WeightedChoice<>(WOOD, 1));
+                    armour.add(new WeightedChoice<>(STONE, 3));
+                    armour.add(new WeightedChoice<>(IRON, 5));
+                    armour.add(new WeightedChoice<>(GOLD, 3));
+                    armour.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 4:
-                    armour.add(new WeightedChoice<Quality>(WOOD, 1));
-                    armour.add(new WeightedChoice<Quality>(STONE, 2));
-                    armour.add(new WeightedChoice<Quality>(IRON, 15));
-                    armour.add(new WeightedChoice<Quality>(GOLD, 5));
-                    armour.add(new WeightedChoice<Quality>(DIAMOND, 3));
+                    armour.add(new WeightedChoice<>(WOOD, 1));
+                    armour.add(new WeightedChoice<>(STONE, 2));
+                    armour.add(new WeightedChoice<>(IRON, 15));
+                    armour.add(new WeightedChoice<>(GOLD, 5));
+                    armour.add(new WeightedChoice<>(DIAMOND, 3));
                     break;
             }
             armourQuality.put(i, armour);
 
-            WeightedRandomizer<Quality> weapon = new WeightedRandomizer<Quality>();
+            WeightedRandomizer<Quality> weapon = new WeightedRandomizer<>();
             switch (i) {
                 case 0:
-                    weapon.add(new WeightedChoice<Quality>(WOOD, 200));
-                    weapon.add(new WeightedChoice<Quality>(STONE, 50));
-                    weapon.add(new WeightedChoice<Quality>(IRON, 10));
-                    weapon.add(new WeightedChoice<Quality>(GOLD, 3));
-                    weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    weapon.add(new WeightedChoice<>(WOOD, 200));
+                    weapon.add(new WeightedChoice<>(STONE, 50));
+                    weapon.add(new WeightedChoice<>(IRON, 10));
+                    weapon.add(new WeightedChoice<>(GOLD, 3));
+                    weapon.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 1:
-                    weapon.add(new WeightedChoice<Quality>(WOOD, 100));
-                    weapon.add(new WeightedChoice<Quality>(STONE, 30));
-                    weapon.add(new WeightedChoice<Quality>(IRON, 10));
-                    weapon.add(new WeightedChoice<Quality>(GOLD, 3));
-                    weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    weapon.add(new WeightedChoice<>(WOOD, 100));
+                    weapon.add(new WeightedChoice<>(STONE, 30));
+                    weapon.add(new WeightedChoice<>(IRON, 10));
+                    weapon.add(new WeightedChoice<>(GOLD, 3));
+                    weapon.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 2:
-                    weapon.add(new WeightedChoice<Quality>(WOOD, 50));
-                    weapon.add(new WeightedChoice<Quality>(STONE, 20));
-                    weapon.add(new WeightedChoice<Quality>(IRON, 10));
-                    weapon.add(new WeightedChoice<Quality>(GOLD, 3));
-                    weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    weapon.add(new WeightedChoice<>(WOOD, 50));
+                    weapon.add(new WeightedChoice<>(STONE, 20));
+                    weapon.add(new WeightedChoice<>(IRON, 10));
+                    weapon.add(new WeightedChoice<>(GOLD, 3));
+                    weapon.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 3:
-                    weapon.add(new WeightedChoice<Quality>(WOOD, 1));
-                    weapon.add(new WeightedChoice<Quality>(STONE, 3));
-                    weapon.add(new WeightedChoice<Quality>(IRON, 5));
-                    weapon.add(new WeightedChoice<Quality>(GOLD, 3));
-                    weapon.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    weapon.add(new WeightedChoice<>(WOOD, 1));
+                    weapon.add(new WeightedChoice<>(STONE, 3));
+                    weapon.add(new WeightedChoice<>(IRON, 5));
+                    weapon.add(new WeightedChoice<>(GOLD, 3));
+                    weapon.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 4:
-                    weapon.add(new WeightedChoice<Quality>(WOOD, 1));
-                    weapon.add(new WeightedChoice<Quality>(STONE, 2));
-                    weapon.add(new WeightedChoice<Quality>(IRON, 15));
-                    weapon.add(new WeightedChoice<Quality>(GOLD, 5));
-                    weapon.add(new WeightedChoice<Quality>(DIAMOND, 3));
+                    weapon.add(new WeightedChoice<>(WOOD, 1));
+                    weapon.add(new WeightedChoice<>(STONE, 2));
+                    weapon.add(new WeightedChoice<>(IRON, 15));
+                    weapon.add(new WeightedChoice<>(GOLD, 5));
+                    weapon.add(new WeightedChoice<>(DIAMOND, 3));
                     break;
             }
             weaponQuality.put(i, weapon);
 
-            WeightedRandomizer<Quality> tool = new WeightedRandomizer<Quality>();
+            WeightedRandomizer<Quality> tool = new WeightedRandomizer<>();
             switch (i) {
                 case 0:
-                    tool.add(new WeightedChoice<Quality>(WOOD, 10));
-                    tool.add(new WeightedChoice<Quality>(STONE, 20));
-                    tool.add(new WeightedChoice<Quality>(IRON, 10));
-                    tool.add(new WeightedChoice<Quality>(GOLD, 3));
-                    tool.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    tool.add(new WeightedChoice<>(WOOD, 10));
+                    tool.add(new WeightedChoice<>(STONE, 20));
+                    tool.add(new WeightedChoice<>(IRON, 10));
+                    tool.add(new WeightedChoice<>(GOLD, 3));
+                    tool.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 1:
-                    tool.add(new WeightedChoice<Quality>(WOOD, 2));
-                    tool.add(new WeightedChoice<Quality>(STONE, 10));
-                    tool.add(new WeightedChoice<Quality>(IRON, 10));
-                    tool.add(new WeightedChoice<Quality>(GOLD, 3));
-                    tool.add(new WeightedChoice<Quality>(DIAMOND, 1));
+                    tool.add(new WeightedChoice<>(WOOD, 2));
+                    tool.add(new WeightedChoice<>(STONE, 10));
+                    tool.add(new WeightedChoice<>(IRON, 10));
+                    tool.add(new WeightedChoice<>(GOLD, 3));
+                    tool.add(new WeightedChoice<>(DIAMOND, 1));
                     break;
                 case 2:
-                    tool.add(new WeightedChoice<Quality>(WOOD, 1));
-                    tool.add(new WeightedChoice<Quality>(STONE, 5));
-                    tool.add(new WeightedChoice<Quality>(IRON, 10));
-                    tool.add(new WeightedChoice<Quality>(GOLD, 5));
-                    tool.add(new WeightedChoice<Quality>(DIAMOND, 3));
+                    tool.add(new WeightedChoice<>(WOOD, 1));
+                    tool.add(new WeightedChoice<>(STONE, 5));
+                    tool.add(new WeightedChoice<>(IRON, 10));
+                    tool.add(new WeightedChoice<>(GOLD, 5));
+                    tool.add(new WeightedChoice<>(DIAMOND, 3));
                     break;
                 case 3:
-                    tool.add(new WeightedChoice<Quality>(WOOD, 1));
-                    tool.add(new WeightedChoice<Quality>(STONE, 3));
-                    tool.add(new WeightedChoice<Quality>(IRON, 10));
-                    tool.add(new WeightedChoice<Quality>(GOLD, 5));
-                    tool.add(new WeightedChoice<Quality>(DIAMOND, 5));
+                    tool.add(new WeightedChoice<>(WOOD, 1));
+                    tool.add(new WeightedChoice<>(STONE, 3));
+                    tool.add(new WeightedChoice<>(IRON, 10));
+                    tool.add(new WeightedChoice<>(GOLD, 5));
+                    tool.add(new WeightedChoice<>(DIAMOND, 5));
                     break;
                 case 4:
-                    tool.add(new WeightedChoice<Quality>(WOOD, 1));
-                    tool.add(new WeightedChoice<Quality>(STONE, 2));
-                    tool.add(new WeightedChoice<Quality>(IRON, 10));
-                    tool.add(new WeightedChoice<Quality>(GOLD, 3));
-                    tool.add(new WeightedChoice<Quality>(DIAMOND, 5));
+                    tool.add(new WeightedChoice<>(WOOD, 1));
+                    tool.add(new WeightedChoice<>(STONE, 2));
+                    tool.add(new WeightedChoice<>(IRON, 10));
+                    tool.add(new WeightedChoice<>(GOLD, 3));
+                    tool.add(new WeightedChoice<>(DIAMOND, 5));
                     break;
             }
             toolQuality.put(i, tool);

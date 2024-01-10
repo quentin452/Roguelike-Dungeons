@@ -4,8 +4,8 @@ import java.util.Random;
 
 public interface IWeighted<T> {
 
-    public int getWeight();
+    int getWeight();
 
-    public T get(Random rand);
+    T get(Random rand);
 
 }

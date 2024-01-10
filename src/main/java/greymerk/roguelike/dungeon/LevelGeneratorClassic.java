@@ -13,12 +13,12 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class LevelGeneratorClassic implements ILevelGenerator {
 
-    private IWorldEditor editor;
-    private Random rand;
-    private IDungeonLevel level;
+    private final IWorldEditor editor;
+    private final Random rand;
+    private final IDungeonLevel level;
 
-    private List<DungeonNode> nodes;
-    private List<DungeonTunnel> tunnels;
+    private final List<DungeonNode> nodes;
+    private final List<DungeonTunnel> tunnels;
     private DungeonNode end;
 
     public LevelGeneratorClassic(IWorldEditor editor, Random rand, IDungeonLevel level) {
@@ -26,12 +26,12 @@ public class LevelGeneratorClassic implements ILevelGenerator {
         this.rand = rand;
         this.level = level;
 
-        nodes = new ArrayList<DungeonNode>();
-        tunnels = new ArrayList<DungeonTunnel>();
+        nodes = new ArrayList<>();
+        tunnels = new ArrayList<>();
     }
 
     public void generate(Coord start, DungeonNode oldEnd) {
-        List<Node> gNodes = new ArrayList<Node>();
+        List<Node> gNodes = new ArrayList<>();
         Node startNode = new Node(
                 this,
                 level.getSettings(),
@@ -112,6 +112,7 @@ public class LevelGeneratorClassic implements ILevelGenerator {
         for (Node node : nodes) {
             if (!node.isDone()) {
                 allDone = false;
+                break;
             }
         }
 
@@ -159,11 +160,11 @@ public class LevelGeneratorClassic implements ILevelGenerator {
     private class Tunneler {
 
         private boolean done;
-        private Cardinal dir;
-        private LevelSettings settings;
-        private LevelGeneratorClassic generator;
-        private Coord start;
-        private Coord end;
+        private final Cardinal dir;
+        private final LevelSettings settings;
+        private final LevelGeneratorClassic generator;
+        private final Coord start;
+        private final Coord end;
         private int extend;
 
         public Tunneler(Cardinal dir, LevelSettings settings, LevelGeneratorClassic generator, Coord start) {
@@ -214,13 +215,13 @@ public class LevelGeneratorClassic implements ILevelGenerator {
     private class Node {
 
         private List<Tunneler> tunnelers;
-        private LevelGeneratorClassic level;
-        private LevelSettings settings;
-        private Cardinal direction;
-        private Coord pos;
+        private final LevelGeneratorClassic level;
+        private final LevelSettings settings;
+        private final Cardinal direction;
+        private final Coord pos;
 
         public Node(LevelGeneratorClassic level, LevelSettings settings, Cardinal direction, Coord pos) {
-            this.tunnelers = new ArrayList<Tunneler>();
+            this.tunnelers = new ArrayList<>();
             this.level = level;
             this.settings = settings;
             this.direction = direction;
@@ -265,16 +266,16 @@ public class LevelGeneratorClassic implements ILevelGenerator {
         }
 
         public Cardinal[] getEntrances() {
-            List<Cardinal> c = new ArrayList<Cardinal>();
+            List<Cardinal> c = new ArrayList<>();
             c.add(Cardinal.reverse(this.direction));
             for (Tunneler t : this.tunnelers) {
                 c.add(t.dir);
             }
-            return c.toArray(new Cardinal[c.size()]);
+            return c.toArray(new Cardinal[0]);
         }
 
         public List<DungeonTunnel> createTunnels(IWorldEditor editor) {
-            List<DungeonTunnel> tunnels = new ArrayList<DungeonTunnel>();
+            List<DungeonTunnel> tunnels = new ArrayList<>();
             for (Tunneler t : this.tunnelers) {
                 tunnels.add(t.createTunnel());
             }
@@ -286,7 +287,7 @@ public class LevelGeneratorClassic implements ILevelGenerator {
         }
 
         public void cull() {
-            List<Tunneler> toKeep = new ArrayList<Tunneler>();
+            List<Tunneler> toKeep = new ArrayList<>();
             for (Tunneler t : this.tunnelers) {
                 if (t.done) {
                     toKeep.add(t);

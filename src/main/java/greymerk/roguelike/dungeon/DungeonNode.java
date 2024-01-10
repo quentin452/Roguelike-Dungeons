@@ -6,9 +6,9 @@ import greymerk.roguelike.worldgen.Coord;
 
 public class DungeonNode {
 
-    private Coord pos;
+    private final Coord pos;
     private IDungeonRoom toGenerate;
-    private Cardinal[] entrances;
+    private final Cardinal[] entrances;
 
     public DungeonNode(Cardinal[] entrances, Coord origin) {
         this.entrances = entrances;

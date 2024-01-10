@@ -12,13 +12,13 @@ public class SegmentGeneratorCustom extends SegmentGeneratorBase {
     public SegmentGeneratorCustom(JsonObject json) {
 
         if (json.has("segments")) {
-            segments = new WeightedRandomizer<Segment>();
+            segments = new WeightedRandomizer<>();
             JsonArray data = json.get("segments").getAsJsonArray();
             for (JsonElement e : data) {
                 JsonObject weighted = e.getAsJsonObject();
                 String type = weighted.get("type").getAsString();
                 int weight = weighted.get("weight").getAsInt();
-                segments.add(new WeightedChoice<Segment>(Segment.valueOf(type), weight));
+                segments.add(new WeightedChoice<>(Segment.valueOf(type), weight));
             }
         }
 

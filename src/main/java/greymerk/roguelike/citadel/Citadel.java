@@ -1,5 +1,6 @@
 package greymerk.roguelike.citadel;
 
+import java.util.Objects;
 import java.util.Random;
 
 import greymerk.roguelike.theme.Theme;
@@ -18,7 +19,7 @@ public class Citadel {
         MinimumSpanningTree mst = new MinimumSpanningTree(rand, 7, EDGE_LENGTH);
         // mst.generate(world, rand, new MetaBlock(Blocks.glowstone), new Coord(x, 100, z));
 
-        CityGrounds.generate(editor, rand, mst, Theme.getTheme(Theme.OAK), new Coord(x, 50, z));
+        CityGrounds.generate(editor, rand, mst, Objects.requireNonNull(Theme.getTheme(Theme.OAK)), new Coord(x, 50, z));
     }
 
     public static Random getRandom(IWorldEditor editor, int x, int z) {

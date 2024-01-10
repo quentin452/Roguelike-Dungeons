@@ -5,20 +5,20 @@ import greymerk.roguelike.worldgen.IStair;
 
 public interface ITheme {
 
-    public IBlockFactory getPrimaryFloor();
+    IBlockFactory getPrimaryFloor();
 
-    public IBlockFactory getPrimaryWall();
+    IBlockFactory getPrimaryWall();
 
-    public IStair getPrimaryStair();
+    IStair getPrimaryStair();
 
-    public IBlockFactory getPrimaryPillar();
+    IBlockFactory getPrimaryPillar();
 
-    public IBlockFactory getSecondaryFloor();
+    IBlockFactory getSecondaryFloor();
 
-    public IBlockFactory getSecondaryWall();
+    IBlockFactory getSecondaryWall();
 
-    public IStair getSecondaryStair();
+    IStair getSecondaryStair();
 
-    public IBlockFactory getSecondaryPillar();
+    IBlockFactory getSecondaryPillar();
 
 }

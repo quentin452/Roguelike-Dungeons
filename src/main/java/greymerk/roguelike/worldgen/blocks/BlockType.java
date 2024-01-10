@@ -282,8 +282,7 @@ public enum BlockType {
         MetaBlock block = BlockType.get(type);
         Block b = block.getBlock();
         Item i = Item.getItemFromBlock(b);
-        ItemStack item = new ItemStack(i);
 
-        return item;
+        return new ItemStack(i);
     }
 }

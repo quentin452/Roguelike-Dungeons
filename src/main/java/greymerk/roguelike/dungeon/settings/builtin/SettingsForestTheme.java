@@ -20,7 +20,7 @@ public class SettingsForestTheme extends DungeonSettings {
     public SettingsForestTheme() {
 
         this.criteria = new SpawnCriteria();
-        List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+        List<BiomeDictionary.Type> biomes = new ArrayList<>();
         biomes.add(BiomeDictionary.Type.FOREST);
         this.criteria.setBiomeTypes(biomes);
 

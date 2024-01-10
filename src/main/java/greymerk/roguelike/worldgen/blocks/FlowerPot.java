@@ -122,7 +122,6 @@ public enum FlowerPot {
                 return;
             default:
                 pot.func_145964_a(Item.getItemFromBlock(Blocks.yellow_flower), 0);
-                return;
         }
     }
 

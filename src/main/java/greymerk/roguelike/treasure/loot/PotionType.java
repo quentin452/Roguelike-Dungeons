@@ -4,6 +4,6 @@ public enum PotionType {
 
     REGULAR,
     SPLASH,
-    LINGERING;
+    LINGERING
 
 }

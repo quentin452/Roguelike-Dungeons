@@ -97,7 +97,7 @@ public enum PotionMixture {
 
     public static void addRandomEffects(Random rand, ItemStack potion, int numEffects) {
 
-        List<PotionEffect> effects = new ArrayList<PotionEffect>(Arrays.asList(PotionEffect.values()));
+        List<PotionEffect> effects = new ArrayList<>(Arrays.asList(PotionEffect.values()));
         Collections.shuffle(effects, rand);
 
         for (int i = 0; i < numEffects; ++i) {

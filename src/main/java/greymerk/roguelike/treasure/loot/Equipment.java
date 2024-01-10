@@ -10,6 +10,6 @@ public enum Equipment {
     FEET,
     PICK,
     AXE,
-    SHOVEL;
+    SHOVEL
 
 }

@@ -9,10 +9,10 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface IShape extends Iterable<Coord> {
 
-    public void fill(IWorldEditor editor, Random rand, IBlockFactory block);
+    void fill(IWorldEditor editor, Random rand, IBlockFactory block);
 
-    public void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid);
+    void fill(IWorldEditor editor, Random rand, IBlockFactory block, boolean fillAir, boolean replaceSolid);
 
-    public List<Coord> get();
+    List<Coord> get();
 
 }

@@ -10,12 +10,12 @@ import net.minecraft.tileentity.TileEntityChest;
 
 public class Inventory {
 
-    private TileEntityChest chest;
+    private final TileEntityChest chest;
     List<Integer> shuffledSlots;
 
     public Inventory(Random rand, TileEntityChest chest) {
         this.chest = chest;
-        this.shuffledSlots = new ArrayList<Integer>();
+        this.shuffledSlots = new ArrayList<>();
         for (int i = 0; i < this.getInventorySize(); ++i) {
             shuffledSlots.add(i);
         }

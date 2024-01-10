@@ -9,12 +9,11 @@ import java.io.InputStreamReader;
  */
 public class ConfigFile extends ConfigurationProvider {
 
-    private String filename;
-    private ConfigurationParser parser;
+    private final String filename;
+    private final ConfigurationParser parser;
 
     /**
      * Creates a configuration file by parsing a certain file.
-     *
      * \param [in] filename The name of the file to read. \param [in] parser A ConfigurationParser which will be used to
      * parse the data in the given file.
      */

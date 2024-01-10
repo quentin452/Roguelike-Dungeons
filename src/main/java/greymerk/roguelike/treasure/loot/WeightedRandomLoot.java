@@ -14,14 +14,14 @@ import greymerk.roguelike.util.JsonNBT;
 
 public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeighted<ItemStack> {
 
-    private String name;
+    private final String name;
     private Item item;
     private Block block;
-    private int damage;
-    private int min;
-    private int max;
-    private int enchLevel;
-    private int weight;
+    private final int damage;
+    private final int min;
+    private final int max;
+    private final int enchLevel;
+    private final int weight;
 
     private NBTTagCompound nbt;
 
@@ -109,15 +109,15 @@ public class WeightedRandomLoot implements Comparable<WeightedRandomLoot>, IWeig
         } catch (NullPointerException e) {
             System.err.println("error occurred while attempting to enchant " + this.name);
         }
-        if (this.nbt != null) item.setTagCompound(this.nbt);
+        if (this.nbt != null) {
+            assert item != null;
+            item.setTagCompound(this.nbt);
+        }
         return item;
     }
 
     @Override
     public int compareTo(WeightedRandomLoot other) {
-        if (this.weight > other.weight) return -1;
-        if (this.weight < other.weight) return 1;
-
-        return 0;
+        return Integer.compare(other.weight, this.weight);
     }
 }

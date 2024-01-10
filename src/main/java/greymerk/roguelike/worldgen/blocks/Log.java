@@ -10,8 +10,7 @@ public class Log {
 
     public static MetaBlock getLog(Wood type, Cardinal dir) {
 
-        MetaBlock log = new MetaBlock(getBlockId(type), getMeta(type, dir));
-        return log;
+        return new MetaBlock(getBlockId(type), getMeta(type, dir));
 
     }
 

@@ -10,6 +10,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface ISegment {
 
-    public void generate(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord pos);
+    void generate(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord pos);
 
 }

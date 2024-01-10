@@ -16,7 +16,6 @@ public class Configuration {
 
     /**
      * Creates a new configuration key/value pair.
-     *
      * \param [in] key The key associated with this configuration. \param [in] value The value associated with this
      * configuration.
      */

@@ -17,7 +17,7 @@ public class SettingsMesaTheme extends DungeonSettings {
     public SettingsMesaTheme() {
 
         this.criteria = new SpawnCriteria();
-        List<BiomeDictionary.Type> biomes = new ArrayList<BiomeDictionary.Type>();
+        List<BiomeDictionary.Type> biomes = new ArrayList<>();
         biomes.add(BiomeDictionary.Type.MESA);
         this.criteria.setBiomeTypes(biomes);
 

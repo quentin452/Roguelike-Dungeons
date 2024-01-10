@@ -11,7 +11,6 @@ public class ConfigFileWriter {
 
     /**
      * Writes a particular set of configurations to a particular file according to a particular representation.
-     *
      * \param [in] filename The name of the file to which configuration data shall be written. \param [in] config The
      * configurations which shall be written to the given file. \param [in] writer A ConfigurationParser which
      * implements the desired strategy for representing configuration data in the file.

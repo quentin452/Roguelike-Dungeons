@@ -8,7 +8,7 @@ import greymerk.roguelike.worldgen.Coord;
 public class Point {
 
     private Coord position;
-    private Coord adjusted;
+    private final Coord adjusted;
     private int rank;
     private Point parent;
 
@@ -46,9 +46,9 @@ public class Point {
     }
 
     public void scaleBy(double multiplier) {
-        double x = (double) this.position.getX();
-        double y = (double) this.position.getY();
-        double z = (double) this.position.getZ();
+        double x = this.position.getX();
+        double y = this.position.getY();
+        double z = this.position.getZ();
 
         x *= multiplier;
         z *= multiplier;

@@ -6,23 +6,21 @@ import java.util.Random;
 
 public class WeightedRandomizer<T> implements IWeighted<T> {
 
-    private int weight;
+    private final int weight;
     private int weightSum;
-    private List<IWeighted<T>> items;
+    private final List<IWeighted<T>> items;
 
     public WeightedRandomizer(int weight) {
         this.weight = weight;
         this.weightSum = 0;
-        items = new ArrayList<IWeighted<T>>();
+        items = new ArrayList<>();
     }
 
     public WeightedRandomizer(WeightedRandomizer<T> toCopy) {
         this.weight = toCopy.weight;
         this.weightSum = toCopy.weightSum;
-        this.items = new ArrayList<IWeighted<T>>();
-        for (IWeighted<T> e : toCopy.items) {
-            items.add(e);
-        }
+        this.items = new ArrayList<>();
+        items.addAll(toCopy.items);
     }
 
     public WeightedRandomizer() {

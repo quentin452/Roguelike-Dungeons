@@ -12,13 +12,13 @@ import greymerk.roguelike.util.JsonNBT;
 
 public class Spawnable {
 
-    private boolean equip;
-    private String name;
+    private final boolean equip;
+    private final String name;
     private NBTTagCompound meta;
 
     public Spawnable(JsonObject data) {
         name = data.get("name").getAsString();
-        equip = data.has("equip") ? data.get("equip").getAsBoolean() : true;
+        equip = !data.has("equip") || data.get("equip").getAsBoolean();
         if (data.has("meta")) {
             JsonObject metadata = data.get("meta").getAsJsonObject();
             this.meta = JsonNBT.jsonToCompound(metadata);

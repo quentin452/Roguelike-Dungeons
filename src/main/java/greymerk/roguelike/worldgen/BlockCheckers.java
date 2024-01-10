@@ -9,8 +9,8 @@ import com.google.gson.JsonElement;
 
 public class BlockCheckers extends BlockBase {
 
-    private IBlockFactory fillOne;
-    private IBlockFactory fillTwo;
+    private final IBlockFactory fillOne;
+    private final IBlockFactory fillTwo;
 
     public BlockCheckers(IBlockFactory fillOne, IBlockFactory fillTwo) {
         this.fillOne = fillOne;
@@ -19,7 +19,7 @@ public class BlockCheckers extends BlockBase {
 
     public BlockCheckers(JsonElement json) {
         JsonArray arr = (JsonArray) json;
-        List<IBlockFactory> blocks = new ArrayList<IBlockFactory>();
+        List<IBlockFactory> blocks = new ArrayList<>();
 
         for (JsonElement entry : arr) {
             blocks.add(BlockProvider.create(entry.getAsJsonObject()));

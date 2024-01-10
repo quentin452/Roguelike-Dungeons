@@ -14,13 +14,13 @@ import greymerk.roguelike.util.WeightedRandomizer;
 
 public class DungeonFactory implements IDungeonFactory {
 
-    private List<DungeonRoom> singles;
-    private WeightedRandomizer<DungeonRoom> multiple;
+    private final List<DungeonRoom> singles;
+    private final WeightedRandomizer<DungeonRoom> multiple;
     private DungeonRoom base;
 
     public DungeonFactory(DungeonRoom base) {
-        singles = new ArrayList<DungeonRoom>();
-        multiple = new WeightedRandomizer<DungeonRoom>();
+        singles = new ArrayList<>();
+        multiple = new WeightedRandomizer<>();
         this.base = base;
     }
 
@@ -45,10 +45,10 @@ public class DungeonFactory implements IDungeonFactory {
     }
 
     public DungeonFactory(DungeonFactory toCopy) {
-        singles = new ArrayList<DungeonRoom>();
+        singles = new ArrayList<>();
         singles.addAll(toCopy.singles);
 
-        multiple = new WeightedRandomizer<DungeonRoom>(toCopy.multiple);
+        multiple = new WeightedRandomizer<>(toCopy.multiple);
     }
 
     public void addSingle(DungeonRoom type) {
@@ -72,7 +72,7 @@ public class DungeonFactory implements IDungeonFactory {
     }
 
     public void addRandom(DungeonRoom type, int weight) {
-        multiple.add(new WeightedChoice<DungeonRoom>(type, weight));
+        multiple.add(new WeightedChoice<>(type, weight));
     }
 
     @Override

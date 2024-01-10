@@ -8,6 +8,6 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface ITower {
 
-    public void generate(IWorldEditor editor, Random rand, ITheme theme, Coord pos);
+    void generate(IWorldEditor editor, Random rand, ITheme theme, Coord pos);
 
 }

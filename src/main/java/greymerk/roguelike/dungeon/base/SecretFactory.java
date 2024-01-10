@@ -17,15 +17,15 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 public class SecretFactory implements ISecretRoom {
 
     private int count;
-    private List<ISecretRoom> secrets;
+    private final List<ISecretRoom> secrets;
 
     public SecretFactory() {
         count = 0;
-        secrets = new ArrayList<ISecretRoom>();
+        secrets = new ArrayList<>();
     }
 
     public SecretFactory(SecretFactory toCopy) {
-        secrets = new ArrayList<ISecretRoom>();
+        secrets = new ArrayList<>();
         this.count = toCopy.count;
 
         for (ISecretRoom room : toCopy.secrets) {
@@ -43,7 +43,7 @@ public class SecretFactory implements ISecretRoom {
     }
 
     public SecretFactory(JsonArray data) {
-        secrets = new ArrayList<ISecretRoom>();
+        secrets = new ArrayList<>();
         for (JsonElement e : data) {
             JsonObject room = e.getAsJsonObject();
             String type = room.get("type").getAsString();

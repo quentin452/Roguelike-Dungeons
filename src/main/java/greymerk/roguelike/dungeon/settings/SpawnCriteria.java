@@ -31,7 +31,7 @@ public class SpawnCriteria {
 
         if (data.has("biomes")) {
             JsonArray biomeList = data.get("biomes").getAsJsonArray();
-            this.biomes = new ArrayList<String>();
+            this.biomes = new ArrayList<>();
             for (JsonElement e : biomeList) {
                 String name = e.getAsString();
                 this.biomes.add(name);
@@ -40,7 +40,7 @@ public class SpawnCriteria {
 
         if (data.has("biomeTypes")) {
             JsonArray biomeTypeList = data.get("biomeTypes").getAsJsonArray();
-            this.biomeTypes = new ArrayList<BiomeDictionary.Type>();
+            this.biomeTypes = new ArrayList<>();
             for (JsonElement e : biomeTypeList) {
                 String type = e.getAsString();
                 this.biomeTypes.add(BiomeDictionary.Type.valueOf(type));
@@ -49,7 +49,7 @@ public class SpawnCriteria {
 
         if (data.has("dimensionBL")) {
             JsonArray blackList = data.get("dimensionBL").getAsJsonArray();
-            this.dimensionBlackList = new ArrayList<Integer>();
+            this.dimensionBlackList = new ArrayList<>();
             for (JsonElement e : blackList) {
                 int id = e.getAsInt();
                 this.dimensionBlackList.add(id);
@@ -58,7 +58,7 @@ public class SpawnCriteria {
 
         if (data.has("dimensionWL")) {
             JsonArray whiteList = data.get("dimensionWL").getAsJsonArray();
-            this.dimensionWhiteList = new ArrayList<Integer>();
+            this.dimensionWhiteList = new ArrayList<>();
             for (JsonElement e : whiteList) {
                 int id = e.getAsInt();
                 this.dimensionWhiteList.add(id);
@@ -90,17 +90,15 @@ public class SpawnCriteria {
 
         Integer dimID = editor.getDimension();
 
-        List<Integer> dimBL = new ArrayList<Integer>();
-
         if (this.dimensionBlackList != null) {
             this.dimensionBlackList.addAll(this.dimensionBlackList);
         }
 
-        dimBL.addAll(RogueConfig.getIntList(RogueConfig.DIMENSIONBL));
+        List<Integer> dimBL = new ArrayList<>(RogueConfig.getIntList(RogueConfig.DIMENSIONBL));
 
         if (dimBL.contains(dimID)) return false;
 
-        List<Integer> dimWL = new ArrayList<Integer>();
+        List<Integer> dimWL = new ArrayList<>();
 
         if (this.dimensionWhiteList != null) {
             dimWL.addAll(this.dimensionWhiteList);

@@ -51,7 +51,6 @@ public class SecretRoom implements ISecretRoom {
         end.add(Cardinal.UP, 2);
         RectSolid.fill(editor, rand, start, end, settings.getTheme().getPrimaryWall(), false, true);
 
-        start = new Coord(pos);
         end = new Coord(pos);
         end.add(dir, size + 5);
         end.add(Cardinal.UP);

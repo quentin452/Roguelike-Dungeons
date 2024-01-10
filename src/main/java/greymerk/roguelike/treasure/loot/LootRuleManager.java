@@ -18,14 +18,14 @@ import greymerk.roguelike.util.WeightedRandomizer;
 
 public class LootRuleManager {
 
-    private List<LootRule> rules;
+    private final List<LootRule> rules;
 
     public LootRuleManager() {
-        this.rules = new ArrayList<LootRule>();
+        this.rules = new ArrayList<>();
     }
 
     public LootRuleManager(JsonElement e) {
-        this.rules = new ArrayList<LootRule>();
+        this.rules = new ArrayList<>();
         JsonArray arr = e.getAsJsonArray();
         for (JsonElement ruleElement : arr) {
 
@@ -35,12 +35,12 @@ public class LootRuleManager {
 
             if (!rule.has("loot")) continue;
             JsonArray data = rule.get("loot").getAsJsonArray();
-            WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>(1);
+            WeightedRandomizer<ItemStack> items = new WeightedRandomizer<>(1);
             for (JsonElement item : data) {
                 items.add(parseProvider(item.getAsJsonObject()));
             }
 
-            List<Integer> levels = new ArrayList<Integer>();
+            List<Integer> levels = new ArrayList<>();
             JsonElement levelElement = rule.get("level");
             if (levelElement.isJsonArray()) {
                 JsonArray levelArray = levelElement.getAsJsonArray();
@@ -81,7 +81,7 @@ public class LootRuleManager {
 
         if (lootItem.get("data").isJsonObject()) {
             JsonObject data = lootItem.get("data").getAsJsonObject();
-            WeightedRandomLoot item = null;
+            WeightedRandomLoot item;
             try {
                 item = new WeightedRandomLoot(data, weight);
             } catch (Exception e) {
@@ -93,7 +93,7 @@ public class LootRuleManager {
         }
 
         JsonArray data = lootItem.get("data").getAsJsonArray();
-        WeightedRandomizer<ItemStack> items = new WeightedRandomizer<ItemStack>(weight);
+        WeightedRandomizer<ItemStack> items = new WeightedRandomizer<>(weight);
         for (JsonElement e : data) {
             items.add(parseProvider(e.getAsJsonObject()));
         }

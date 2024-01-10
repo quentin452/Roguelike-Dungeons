@@ -12,8 +12,8 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public class Sphere implements IShape {
 
-    private Coord start;
-    private Coord end;
+    private final Coord start;
+    private final Coord end;
 
     public Sphere(Coord start, Coord end) {
         this.start = new Coord(start);
@@ -40,17 +40,17 @@ public class Sphere implements IShape {
 
     @Override
     public List<Coord> get() {
-        List<Coord> copy = new ArrayList<Coord>();
+        List<Coord> copy = new ArrayList<>();
         for (Coord pos : this) {
             copy.add(pos);
         }
         return copy;
     }
 
-    private class SphereIterator implements Iterator<Coord> {
+    private static class SphereIterator implements Iterator<Coord> {
 
-        private Coord centre;
-        private int radius;
+        private final Coord centre;
+        private final int radius;
 
         private int layer;
         private int row;
@@ -68,8 +68,8 @@ public class Sphere implements IShape {
             Coord diff = e.sub(s);
 
             int r = diff.getX();
-            r = r < diff.getY() ? diff.getY() : r;
-            r = r < diff.getZ() ? diff.getZ() : r;
+            r = Math.max(r, diff.getY());
+            r = Math.max(r, diff.getZ());
             this.radius = r;
 
             layer = 0;

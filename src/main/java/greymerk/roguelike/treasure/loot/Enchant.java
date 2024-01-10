@@ -134,7 +134,7 @@ public enum Enchant {
 
         if (item == null) return;
 
-        List<EnchantmentData> enchants = null;
+        List<EnchantmentData> enchants;
         try {
             enchants = EnchantmentHelper.buildEnchantmentList(rand, item, enchantLevel);
         } catch (NullPointerException e) {
@@ -145,11 +145,13 @@ public enum Enchant {
 
         if (isBook) {
             item.func_150996_a(Items.enchanted_book);
+            assert enchants != null;
             if (enchants.size() > 1) {
                 enchants.remove(rand.nextInt(enchants.size()));
             }
         }
 
+        assert enchants != null;
         for (EnchantmentData toAdd : enchants) {
             if (isBook) {
                 Items.enchanted_book.addEnchantment(item, toAdd);

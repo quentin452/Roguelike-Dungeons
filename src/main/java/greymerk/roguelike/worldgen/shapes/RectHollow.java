@@ -13,8 +13,8 @@ import greymerk.roguelike.worldgen.blocks.BlockType;
 
 public class RectHollow implements IShape {
 
-    private Coord start;
-    private Coord end;
+    private final Coord start;
+    private final Coord end;
 
     public RectHollow(Coord start, Coord end) {
         this.start = start;
@@ -52,7 +52,7 @@ public class RectHollow implements IShape {
 
     @Override
     public List<Coord> get() {
-        List<Coord> coords = new ArrayList<Coord>();
+        List<Coord> coords = new ArrayList<>();
 
         for (Coord c : this) {
             coords.add(c);
@@ -66,7 +66,7 @@ public class RectHollow implements IShape {
         return new RectHollowIterator(start, end);
     }
 
-    private class RectHollowIterator implements Iterator<Coord> {
+    private static class RectHollowIterator implements Iterator<Coord> {
 
         Coord cursor;
         Coord c1;

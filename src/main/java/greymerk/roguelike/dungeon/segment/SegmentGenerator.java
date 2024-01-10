@@ -23,32 +23,32 @@ public class SegmentGenerator implements ISegmentGenerator {
     protected WeightedRandomizer<Segment> segments;
 
     public SegmentGenerator(Segment arch) {
-        this.segments = new WeightedRandomizer<Segment>();
+        this.segments = new WeightedRandomizer<>();
         this.arch = arch;
     }
 
     public SegmentGenerator(SegmentGenerator toCopy) {
         this.arch = toCopy.arch;
-        this.segments = new WeightedRandomizer<Segment>(toCopy.segments);
+        this.segments = new WeightedRandomizer<>(toCopy.segments);
     }
 
     public SegmentGenerator(JsonObject json) {
         String archType = json.get("arch").getAsString();
         arch = Segment.valueOf(archType);
 
-        this.segments = new WeightedRandomizer<Segment>();
+        this.segments = new WeightedRandomizer<>();
         JsonArray segmentList = json.get("segments").getAsJsonArray();
         for (JsonElement e : segmentList) {
             JsonObject segData = e.getAsJsonObject();
             String segType = segData.get("type").getAsString();
             int weight = segData.get("weight").getAsInt();
             Segment type = Segment.valueOf(segType);
-            this.segments.add(new WeightedChoice<Segment>(type, weight));
+            this.segments.add(new WeightedChoice<>(type, weight));
         }
     }
 
     public void add(Segment toAdd, int weight) {
-        this.segments.add(new WeightedChoice<Segment>(toAdd, weight));
+        this.segments.add(new WeightedChoice<>(toAdd, weight));
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SegmentGenerator implements ISegmentGenerator {
         int y = pos.getY();
         int z = pos.getZ();
 
-        List<ISegment> segs = new ArrayList<ISegment>();
+        List<ISegment> segs = new ArrayList<>();
 
         for (Cardinal orth : Cardinal.orthogonal(dir)) {
             ISegment seg = pickSegment(editor, rand, level, dir, pos);

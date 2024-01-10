@@ -21,6 +21,7 @@ import greymerk.roguelike.dungeon.settings.ISettings;
 import greymerk.roguelike.treasure.loot.provider.ItemNovelty;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
+import java.util.Collections;
 
 public class CommandSpawnDungeon extends CommandBase {
 
@@ -68,7 +69,7 @@ public class CommandSpawnDungeon extends CommandBase {
         if (ap.match(0, "dim")) {
             int dim = sender.getEntityWorld().provider.dimensionId;
             sender.addChatMessage(
-                    new ChatComponentText(TextFormat.apply("Dimension id: " + Integer.toString(dim), TextFormat.GOLD)));
+                    new ChatComponentText(TextFormat.apply("Dimension id: " + dim, TextFormat.GOLD)));
             return;
         }
 
@@ -101,7 +102,7 @@ public class CommandSpawnDungeon extends CommandBase {
                 return;
             }
 
-            EntityPlayerMP player = null;
+            EntityPlayerMP player;
             try {
                 player = getCommandSenderAsPlayer(sender);
             } catch (PlayerNotFoundException e) {
@@ -136,7 +137,7 @@ public class CommandSpawnDungeon extends CommandBase {
             String settingName = null;
 
             if (ap.match(1, "here")) {
-                EntityPlayerMP player = null;
+                EntityPlayerMP player;
                 try {
                     player = getCommandSenderAsPlayer(sender);
                 } catch (PlayerNotFoundException e) {
@@ -151,7 +152,7 @@ public class CommandSpawnDungeon extends CommandBase {
                     settingName = ap.get(2);
                 }
             } else if (ap.match(1, "nearby")) {
-                EntityPlayerMP player = null;
+                EntityPlayerMP player;
                 try {
                     player = getCommandSenderAsPlayer(sender);
                 } catch (PlayerNotFoundException e) {
@@ -164,7 +165,7 @@ public class CommandSpawnDungeon extends CommandBase {
                 z = (int) player.posZ;
 
                 if (ap.hasEntry(2)) {
-                    int num = 0;
+                    int num;
                     try {
                         num = parseInt(sender, ap.get(2));
                     } catch (NumberInvalidException e) {
@@ -274,9 +275,9 @@ public class CommandSpawnDungeon extends CommandBase {
                 sender.addChatMessage(
                         new ChatComponentText(
                                 TextFormat.apply(
-                                        "Success: Dungeon generated at " + Integer.toString(x)
+                                        "Success: Dungeon generated at " + x
                                                 + " "
-                                                + Integer.toString(z),
+                                                + z,
                                         TextFormat.GREEN)));
                 return;
             }
@@ -286,7 +287,7 @@ public class CommandSpawnDungeon extends CommandBase {
             sender.addChatMessage(
                     new ChatComponentText(
                             TextFormat.apply(
-                                    "Success: Dungeon generated at " + Integer.toString(x) + " " + Integer.toString(z),
+                                    "Success: Dungeon generated at " + x + " " + z,
                                     TextFormat.GREEN)));
             return;
         }
@@ -319,7 +320,7 @@ public class CommandSpawnDungeon extends CommandBase {
      */
     @SuppressWarnings("rawtypes")
     public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr) {
-        return null;
+        return Collections.emptyList();
     }
 
     /**

@@ -8,15 +8,15 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 
 public interface ISettings {
 
-    public boolean isValid(IWorldEditor editor, Coord pos);
+    boolean isValid(IWorldEditor editor, Coord pos);
 
-    public LevelSettings getLevelSettings(int level);
+    LevelSettings getLevelSettings(int level);
 
-    public TowerSettings getTower();
+    TowerSettings getTower();
 
-    public LootRuleManager getLootRules();
+    LootRuleManager getLootRules();
 
-    public int getNumLevels();
+    int getNumLevels();
 
-    public List<SettingsType> getOverrides();
+    List<SettingsType> getOverrides();
 }

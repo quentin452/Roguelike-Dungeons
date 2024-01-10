@@ -19,17 +19,17 @@ public class SegmentGeneratorBase implements ISegmentGenerator {
     protected WeightedRandomizer<Segment> segments;
 
     public SegmentGeneratorBase() {
-        this.segments = new WeightedRandomizer<Segment>();
-        this.segments.add(new WeightedChoice<Segment>((Segment.SHELF), 1));
-        this.segments.add(new WeightedChoice<Segment>((Segment.INSET), 1));
-        this.segments.add(new WeightedChoice<Segment>((Segment.DOOR), 1));
-        this.segments.add(new WeightedChoice<Segment>((Segment.FIREPLACE), 1));
+        this.segments = new WeightedRandomizer<>();
+        this.segments.add(new WeightedChoice<>((Segment.SHELF), 1));
+        this.segments.add(new WeightedChoice<>((Segment.INSET), 1));
+        this.segments.add(new WeightedChoice<>((Segment.DOOR), 1));
+        this.segments.add(new WeightedChoice<>((Segment.FIREPLACE), 1));
 
         this.arch = Segment.ARCH;
     }
 
     public void add(Segment toAdd, int weight) {
-        this.segments.add(new WeightedChoice<Segment>(toAdd, weight));
+        this.segments.add(new WeightedChoice<>(toAdd, weight));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SegmentGeneratorBase implements ISegmentGenerator {
         int y = pos.getY();
         int z = pos.getZ();
 
-        List<ISegment> segs = new ArrayList<ISegment>();
+        List<ISegment> segs = new ArrayList<>();
 
         for (Cardinal orth : Cardinal.orthogonal(dir)) {
             ISegment seg = pickSegment(editor, rand, level, dir, pos);

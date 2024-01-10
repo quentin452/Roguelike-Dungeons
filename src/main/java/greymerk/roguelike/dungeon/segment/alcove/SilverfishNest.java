@@ -18,7 +18,7 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class SilverfishNest implements IAlcove {
 
-    private static int RECESSED = 6;
+    private static final int RECESSED = 6;
 
     @Override
     public void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir) {

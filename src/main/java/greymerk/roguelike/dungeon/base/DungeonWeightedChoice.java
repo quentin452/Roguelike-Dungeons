@@ -24,9 +24,7 @@ public class DungeonWeightedChoice implements IWeighted<DungeonRoom>, Comparable
 
     @Override
     public int compareTo(IWeighted<?> other) {
-        if (chance < other.getWeight()) return -1;
-        if (chance > other.getWeight()) return 1;
-        return 0;
+        return Integer.compare(chance, other.getWeight());
     }
 
     @Override

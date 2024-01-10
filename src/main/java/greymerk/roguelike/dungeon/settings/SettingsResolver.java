@@ -39,12 +39,12 @@ import greymerk.roguelike.worldgen.IWorldEditor;
 public class SettingsResolver {
 
     private static final String SETTINGS_DIRECTORY = RogueConfig.configDirName + "/settings";
-    private Map<String, DungeonSettings> settings;
-    private List<DungeonSettings> builtin;
-    private DungeonSettings base;
+    private final Map<String, DungeonSettings> settings;
+    private final List<DungeonSettings> builtin;
+    private final DungeonSettings base;
 
     public SettingsResolver() {
-        settings = new HashMap<String, DungeonSettings>();
+        settings = new HashMap<>();
         DungeonSettings base = new SettingsBlank();
         base = new DungeonSettings(base, new SettingsRooms());
         base = new DungeonSettings(base, new SettingsSecrets());
@@ -56,7 +56,7 @@ public class SettingsResolver {
         base.setCriteria(new SpawnCriteria());
         this.base = base;
 
-        this.builtin = new ArrayList<DungeonSettings>();
+        this.builtin = new ArrayList<>();
         this.builtin.add(new SettingsDesertTheme());
         this.builtin.add(new SettingsGrasslandTheme());
         this.builtin.add(new SettingsJungleTheme());
@@ -68,11 +68,11 @@ public class SettingsResolver {
         File settingsDir = new File(SETTINGS_DIRECTORY);
         if (!settingsDir.exists() || !settingsDir.isDirectory()) return;
         File[] settingsFiles = settingsDir.listFiles();
+        assert settingsFiles != null;
         Arrays.sort(settingsFiles);
 
-        for (int i = 0; i < settingsFiles.length; ++i) {
-            File toParse = settingsFiles[i];
-            DungeonSettings toAdd = null;
+        for (File toParse : settingsFiles) {
+            DungeonSettings toAdd;
             try {
                 toAdd = parseFile(toParse);
             } catch (Exception e) {
@@ -94,26 +94,28 @@ public class SettingsResolver {
         }
 
         JsonParser jParser = new JsonParser();
-        JsonObject root = null;
-        DungeonSettings toAdd = null;
+        JsonObject root;
 
         try {
             root = (JsonObject) jParser.parse(content);
         } catch (JsonSyntaxException e) {
-
             Throwable cause = e.getCause();
             throw new Exception(cause.getMessage());
         } catch (Exception e) {
             throw new Exception("An unknown error occurred while parsing json");
         }
-
+        DungeonSettings toAdd;
         try {
             toAdd = new DungeonSettings(settings, root);
         } catch (Exception e) {
-            throw new Exception("An error occured while adding " + toAdd.getName());
+            throw new Exception("An error occurred while creating DungeonSettings");
         }
 
-        return toAdd;
+        try {
+            return toAdd;
+        } catch (Exception e) {
+            throw new Exception("An error occurred while adding " + toAdd.getName());
+        }
     }
 
     public DungeonSettings getByName(String name) {
@@ -172,11 +174,11 @@ public class SettingsResolver {
     }
 
     private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos) {
-        WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
+        WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<>();
 
         for (DungeonSettings setting : this.builtin) {
             if (setting.isValid(editor, pos)) {
-                settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, setting.criteria.weight));
+                settingsRandomizer.add(new WeightedChoice<>(setting, setting.criteria.weight));
             }
         }
 
@@ -184,12 +186,12 @@ public class SettingsResolver {
     }
 
     private DungeonSettings getCustom(IWorldEditor editor, Random rand, Coord pos) {
-        WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<DungeonSettings>();
+        WeightedRandomizer<DungeonSettings> settingsRandomizer = new WeightedRandomizer<>();
 
         for (DungeonSettings setting : this.settings.values()) {
             if (setting.isValid(editor, pos)) {
                 int weight = setting.criteria.weight;
-                settingsRandomizer.add(new WeightedChoice<DungeonSettings>(setting, weight));
+                settingsRandomizer.add(new WeightedChoice<>(setting, weight));
             }
         }
 
@@ -239,10 +241,10 @@ public class SettingsResolver {
 
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (String key : this.settings.keySet()) {
-            s += key += " ";
+            s.append(key).append(" ");
         }
-        return s;
+        return s.toString();
     }
 }

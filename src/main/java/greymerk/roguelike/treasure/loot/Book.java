@@ -10,16 +10,16 @@ import net.minecraft.nbt.NBTTagString;
 
 public class Book {
 
-    private List<String> pages;
+    private final List<String> pages;
     private String author;
     private String title;
 
     public Book() {
-        this.pages = new ArrayList<String>();
+        this.pages = new ArrayList<>();
     }
 
     public Book(String author, String title) {
-        this.pages = new ArrayList<String>();
+        this.pages = new ArrayList<>();
         this.author = author;
         this.title = title;
     }

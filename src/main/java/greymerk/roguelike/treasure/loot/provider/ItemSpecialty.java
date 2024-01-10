@@ -113,14 +113,13 @@ public class ItemSpecialty extends ItemBase {
             item.addEnchantment(Enchantment.efficiency, 3 + rand.nextInt(3));
             item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
             Loot.setItemName(item, "Soulsand Spade");
-            return item;
         } else {
             item = new ItemStack(Items.iron_shovel);
             item.addEnchantment(Enchantment.efficiency, 1 + rand.nextInt(2));
             item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
             Loot.setItemName(item, "Grave Spade");
-            return item;
         }
+        return item;
     }
 
     private static ItemStack getAxe(Random rand, Quality quality) {
@@ -131,14 +130,13 @@ public class ItemSpecialty extends ItemBase {
             item.addEnchantment(Enchantment.efficiency, 3 + rand.nextInt(3));
             item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
             Loot.setItemName(item, "Hellsteel Axe");
-            return item;
         } else {
             item = new ItemStack(Items.iron_axe);
             item.addEnchantment(Enchantment.efficiency, 1 + rand.nextInt(2));
             item.addEnchantment(Enchantment.unbreaking, getUnbreakingLevel(quality, rand));
             Loot.setItemName(item, "Lumberjack's Hatchet");
-            return item;
         }
+        return item;
     }
 
     private static ItemStack getPick(Random rand, Quality quality) {
@@ -160,7 +158,6 @@ public class ItemSpecialty extends ItemBase {
                 return item;
             }
             Loot.setItemName(item, "Crystal Pick");
-            return item;
         } else {
             item = new ItemStack(Items.iron_pickaxe);
             item.addEnchantment(Enchantment.efficiency, 1 + rand.nextInt(2));
@@ -176,8 +173,8 @@ public class ItemSpecialty extends ItemBase {
                 return item;
             }
             Loot.setItemName(item, "Case Hardened Pick");
-            return item;
         }
+        return item;
 
     }
 
@@ -201,10 +198,9 @@ public class ItemSpecialty extends ItemBase {
                 Loot.setItemLore(item, "From the fiery depths", TextFormat.DARKGREEN);
                 return item;
             }
-            item.addEnchantment(Enchantment.unbreaking, quality == Quality.DIAMOND ? 3 : 1 + rand.nextInt(2));
+            item.addEnchantment(Enchantment.unbreaking, 3);
             Loot.setItemName(item, "Eldritch Blade");
             Loot.setItemLore(item, "Rune Etched", TextFormat.DARKGREEN);
-            return item;
         } else {
             item = new ItemStack(Items.iron_sword);
             if (rand.nextBoolean()) {
@@ -213,8 +209,8 @@ public class ItemSpecialty extends ItemBase {
             item.addEnchantment(Enchantment.unbreaking, 3);
             Loot.setItemName(item, "Tempered Blade");
             Loot.setItemLore(item, "Highly Durable", TextFormat.DARKGREEN);
-            return item;
         }
+        return item;
 
     }
 
@@ -286,7 +282,7 @@ public class ItemSpecialty extends ItemBase {
                 item = new ItemStack(Items.leather_helmet);
         }
 
-        String suffix = "";
+        String suffix;
 
         if (rand.nextInt(20) == 0) {
             item.addEnchantment(Enchant.getEnchant(Enchant.PROTECTION), getProtectionLevel(quality, rand));
@@ -311,7 +307,7 @@ public class ItemSpecialty extends ItemBase {
     private static ItemStack getBoots(Random rand, Quality quality) {
         ItemStack item;
 
-        String canonical = "";
+        String canonical;
 
         switch (quality) {
             case WOOD:
@@ -337,7 +333,7 @@ public class ItemSpecialty extends ItemBase {
                 canonical = "Shoes";
         }
 
-        String suffix = "";
+        String suffix;
 
         if (rand.nextInt(10) == 0) {
             item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(quality, rand));
@@ -391,7 +387,7 @@ public class ItemSpecialty extends ItemBase {
                 item = new ItemStack(Items.leather_leggings);
         }
 
-        String suffix = "";
+        String suffix;
 
         if (rand.nextInt(10) == 0) {
             item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(quality, rand));
@@ -417,7 +413,7 @@ public class ItemSpecialty extends ItemBase {
     private static ItemStack getChest(Random rand, Quality quality) {
         ItemStack item;
 
-        String canonical = "";
+        String canonical;
 
         switch (quality) {
             case WOOD:
@@ -443,7 +439,7 @@ public class ItemSpecialty extends ItemBase {
                 canonical = "Tunic";
         }
 
-        String suffix = "";
+        String suffix;
 
         if (rand.nextInt(10) == 0) {
             item.addEnchantment(Enchantment.fireProtection, getProtectionLevel(quality, rand));

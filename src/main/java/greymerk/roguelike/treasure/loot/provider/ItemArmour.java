@@ -135,7 +135,7 @@ public class ItemArmour extends ItemBase {
 
     public static ItemStack dyeArmor(ItemStack armor, int r, int g, int b) {
 
-        int color = r << 16 | g << 8 | b << 0;;
+        int color = r << 16 | g << 8 | b;
 
         NBTTagCompound nbtdata = armor.getTagCompound();
 

@@ -8,7 +8,7 @@ import greymerk.roguelike.util.IWeighted;
 
 public abstract class ItemBase implements IWeighted<ItemStack> {
 
-    private int weight;
+    private final int weight;
     int level;
 
     public ItemBase(int weight, int level) {

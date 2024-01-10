@@ -20,11 +20,11 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonTunnel implements Iterable<Coord> {
 
-    private Coord start;
-    private Coord end;
-    private Cardinal dir;
-    private List<ISegment> segments;
-    private List<Coord> tunnel;
+    private final Coord start;
+    private final Coord end;
+    private final Cardinal dir;
+    private final List<ISegment> segments;
+    private final List<Coord> tunnel;
 
     public DungeonTunnel(IWorldEditor editor, Coord start, Coord end, Cardinal dir) {
         this.start = start;
