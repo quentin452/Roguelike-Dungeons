@@ -18,7 +18,7 @@ Require nothing
 
 # Discord
 
-Add me on discord : iamacatfr
+Add me on discord : imacatfr
 
 Discord server : https://discord.gg/ZnmHKJzKkZ
 
