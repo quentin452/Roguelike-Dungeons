@@ -89,21 +89,14 @@ public class SettingsResolver {
     }
 
     private DungeonSettings parseFile(File toParse) throws Exception {
-        String content;
-
         try {
-            content = Files.toString(toParse, Charsets.UTF_8);
+            String content = Files.toString(toParse, Charsets.UTF_8);
+            JsonParser jParser = new JsonParser();
+            return getDungeonSettings(jParser, content);
         } catch (IOException e) {
-            throw new Exception("Error reading file");
-        }
-
-        JsonParser jParser = new JsonParser();
-        DungeonSettings toAdd = getDungeonSettings(jParser, content);
-
-        try {
-            return toAdd;
-        } catch (Exception e) {
-            throw new Exception("An error occurred while adding " + toAdd.getName());
+            throw new Exception("Error reading file", e);
+        } catch (JsonSyntaxException e) {
+            throw new Exception("JSON syntax error in file", e);
         }
     }
 
