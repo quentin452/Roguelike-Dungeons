@@ -45,16 +45,7 @@ public class SettingsResolver {
 
     public SettingsResolver() {
         settings = new HashMap<>();
-        DungeonSettings base = new SettingsBlank();
-        base = new DungeonSettings(base, new SettingsRooms());
-        base = new DungeonSettings(base, new SettingsSecrets());
-        base = new DungeonSettings(base, new SettingsSegments());
-        base = new DungeonSettings(base, new SettingsSize());
-        base = new DungeonSettings(base, new SettingsTheme());
-        base = new DungeonSettings(base, new SettingsGenerator());
-        base = new DungeonSettings(base, new SettingsLootRules());
-        base.setCriteria(new SpawnCriteria());
-        this.base = base;
+        this.base = getDungeonSettings();
 
         this.builtin = new ArrayList<>();
         this.builtin.add(new SettingsDesertTheme());
@@ -82,6 +73,19 @@ public class SettingsResolver {
             }
             settings.put(toAdd.getName(), toAdd);
         }
+    }
+
+    private static DungeonSettings getDungeonSettings() {
+        DungeonSettings base = new SettingsBlank();
+        base = new DungeonSettings(base, new SettingsRooms());
+        base = new DungeonSettings(base, new SettingsSecrets());
+        base = new DungeonSettings(base, new SettingsSegments());
+        base = new DungeonSettings(base, new SettingsSize());
+        base = new DungeonSettings(base, new SettingsTheme());
+        base = new DungeonSettings(base, new SettingsGenerator());
+        base = new DungeonSettings(base, new SettingsLootRules());
+        base.setCriteria(new SpawnCriteria());
+        return base;
     }
 
     private DungeonSettings parseFile(File toParse) throws Exception {
@@ -125,52 +129,64 @@ public class SettingsResolver {
     }
 
     public ISettings getSettings(IWorldEditor editor, Random rand, Coord pos) {
+        DungeonSettings builtinSettings = getBuiltin(editor, rand, pos);
+        DungeonSettings customSettings = getCustom(editor, rand, pos);
 
-        DungeonSettings builtin = this.getBuiltin(editor, rand, pos);
-        DungeonSettings custom = this.getCustom(editor, rand, pos);
+        if (customSettings != null) {
+            DungeonSettings customBase = createCustomBase(customSettings);
+            return new DungeonSettings(customBase, customSettings);
+        }
 
-        if (custom != null) {
-            List<SettingsType> overrides = custom.getOverrides();
-            DungeonSettings customBase = new SettingsCustomBase();
-            for (SettingsType type : SettingsType.values()) {
-                if (overrides.contains(type)) continue;
-                switch (type) {
-                    case LOOT:
-                        break;
-                    case LOOTRULES:
-                        customBase = new DungeonSettings(customBase, new SettingsLootRules());
-                        break;
-                    case SECRETS:
-                        customBase = new DungeonSettings(customBase, new SettingsSecrets());
-                        break;
-                    case ROOMS:
-                        customBase = new DungeonSettings(customBase, new SettingsRooms());
-                        break;
-                    case THEMES:
-                        customBase = new DungeonSettings(customBase, new SettingsTheme());
-                        break;
-                    case SEGMENTS:
-                        customBase = new DungeonSettings(customBase, new SettingsSegments());
-                        break;
-                    case SIZE:
-                        customBase = new DungeonSettings(customBase, new SettingsSize());
-                        break;
-                    case GENERATORS:
-                        customBase = new DungeonSettings(customBase, new SettingsGenerator());
-                        break;
-                }
+        if (builtinSettings != null && RogueConfig.getBoolean(RogueConfig.DONOVELTYSPAWN)) {
+            return new DungeonSettings(base, builtinSettings);
+        }
+
+        return base.isValid(editor, pos) ? new DungeonSettings(base) : null;
+    }
+
+    private DungeonSettings createCustomBase(DungeonSettings custom) {
+        DungeonSettings customBase = new SettingsCustomBase();
+        List<SettingsType> overrides = custom.getOverrides();
+
+        for (SettingsType type : SettingsType.values()) {
+            if (!overrides.contains(type)) {
+                customBase = addSettingOfType(customBase, type);
             }
-            return new DungeonSettings(customBase, custom);
         }
+        return customBase;
+    }
 
-        if (builtin != null && RogueConfig.getBoolean(RogueConfig.DONOVELTYSPAWN)) {
-            return new DungeonSettings(this.base, builtin);
+    private DungeonSettings addSettingOfType(DungeonSettings base, SettingsType type) {
+        switch (type) {
+            case LOOTRULES:
+                return new DungeonSettings(base, new SettingsLootRules());
+            case SECRETS:
+                return new DungeonSettings(base, new SettingsSecrets());
+            case ROOMS:
+                return new DungeonSettings(base, new SettingsRooms());
+            case THEMES:
+                return new DungeonSettings(base, new SettingsTheme());
+            case SEGMENTS:
+                return new DungeonSettings(base, new SettingsSegments());
+            case SIZE:
+                return new DungeonSettings(base, new SettingsSize());
+            case GENERATORS:
+                return new DungeonSettings(base, new SettingsGenerator());
+            default:
+                return base;
         }
+    }
 
-        if (this.base.isValid(editor, pos)) return new DungeonSettings(this.base);
+    public ISettings getDefaultSettings() {
+        return new DungeonSettings(base);
+    }
 
-        return null;
+    public ISettings getWithDefault(String name) {
+        DungeonSettings custom = settings.get(name);
+        if (custom == null) return null;
 
+        DungeonSettings customBase = createCustomBase(custom);
+        return new DungeonSettings(customBase, custom);
     }
 
     private DungeonSettings getBuiltin(IWorldEditor editor, Random rand, Coord pos) {
@@ -196,47 +212,6 @@ public class SettingsResolver {
         }
 
         return settingsRandomizer.get(rand);
-    }
-
-    public ISettings getDefaultSettings() {
-        return new DungeonSettings(base);
-    }
-
-    public ISettings getWithDefault(String name) {
-
-        DungeonSettings custom = this.settings.get(name);
-        if (custom == null) return null;
-        List<SettingsType> overrides = custom.getOverrides();
-        DungeonSettings customBase = new SettingsCustomBase();
-        for (SettingsType type : SettingsType.values()) {
-            if (overrides.contains(type)) continue;
-            switch (type) {
-                case LOOT:
-                    break;
-                case LOOTRULES:
-                    customBase = new DungeonSettings(customBase, new SettingsLootRules());
-                    break;
-                case SECRETS:
-                    customBase = new DungeonSettings(customBase, new SettingsSecrets());
-                    break;
-                case ROOMS:
-                    customBase = new DungeonSettings(customBase, new SettingsRooms());
-                    break;
-                case THEMES:
-                    customBase = new DungeonSettings(customBase, new SettingsTheme());
-                    break;
-                case SEGMENTS:
-                    customBase = new DungeonSettings(customBase, new SettingsSegments());
-                    break;
-                case SIZE:
-                    customBase = new DungeonSettings(customBase, new SettingsSize());
-                    break;
-                case GENERATORS:
-                    customBase = new DungeonSettings(customBase, new SettingsGenerator());
-                    break;
-            }
-        }
-        return new DungeonSettings(customBase, custom);
     }
 
     @Override
