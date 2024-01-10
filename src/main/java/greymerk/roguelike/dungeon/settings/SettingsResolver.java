@@ -98,6 +98,16 @@ public class SettingsResolver {
         }
 
         JsonParser jParser = new JsonParser();
+        DungeonSettings toAdd = getDungeonSettings(jParser, content);
+
+        try {
+            return toAdd;
+        } catch (Exception e) {
+            throw new Exception("An error occurred while adding " + toAdd.getName());
+        }
+    }
+
+    private DungeonSettings getDungeonSettings(JsonParser jParser, String content) throws Exception {
         JsonObject root;
 
         try {
@@ -114,12 +124,7 @@ public class SettingsResolver {
         } catch (Exception e) {
             throw new Exception("An error occurred while creating DungeonSettings");
         }
-
-        try {
-            return toAdd;
-        } catch (Exception e) {
-            throw new Exception("An error occurred while adding " + toAdd.getName());
-        }
+        return toAdd;
     }
 
     public DungeonSettings getByName(String name) {
