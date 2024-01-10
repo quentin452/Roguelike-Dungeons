@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import greymerk.roguelike.dungeon.base.IDungeonRoom;
 import greymerk.roguelike.dungeon.settings.LevelSettings;
@@ -213,7 +215,6 @@ public class LevelGeneratorClassic implements ILevelGenerator {
     }
 
     private class Node {
-
         private List<Tunneler> tunnelers;
         private final LevelGeneratorClassic level;
         private final LevelSettings settings;
@@ -231,18 +232,14 @@ public class LevelGeneratorClassic implements ILevelGenerator {
         }
 
         private void spawnTunnelers() {
-
             if (!this.level.level.inRange(pos)) {
                 return;
             }
 
             for (Cardinal dir : Cardinal.directions) {
-
-                if (dir.equals(Cardinal.reverse(this.direction))) {
-                    continue;
+                if (!dir.equals(Cardinal.reverse(this.direction))) {
+                    this.tunnelers.add(new Tunneler(dir, this.settings, this.level, new Coord(this.pos)));
                 }
-
-                this.tunnelers.add(new Tunneler(dir, this.settings, this.level, new Coord(this.pos)));
             }
         }
 
@@ -253,12 +250,7 @@ public class LevelGeneratorClassic implements ILevelGenerator {
         }
 
         public boolean isDone() {
-            for (Tunneler tunneler : tunnelers) {
-                if (!tunneler.isDone()) {
-                    return false;
-                }
-            }
-            return true;
+            return tunnelers.stream().allMatch(Tunneler::isDone);
         }
 
         public Coord getPos() {
@@ -266,34 +258,23 @@ public class LevelGeneratorClassic implements ILevelGenerator {
         }
 
         public Cardinal[] getEntrances() {
-            List<Cardinal> c = new ArrayList<>();
-            c.add(Cardinal.reverse(this.direction));
-            for (Tunneler t : this.tunnelers) {
-                c.add(t.dir);
-            }
-            return c.toArray(new Cardinal[0]);
+            return Stream.concat(Stream.of(Cardinal.reverse(this.direction)),
+                    tunnelers.stream().map(t -> t.dir))
+                .toArray(Cardinal[]::new);
         }
 
         public List<DungeonTunnel> createTunnels(IWorldEditor editor) {
-            List<DungeonTunnel> tunnels = new ArrayList<>();
-            for (Tunneler t : this.tunnelers) {
-                tunnels.add(t.createTunnel());
-            }
-            return tunnels;
+            return tunnelers.stream()
+                .map(Tunneler::createTunnel)
+                .collect(Collectors.toList());
         }
 
         public DungeonNode createNode() {
-            return new DungeonNode(this.getEntrances(), this.pos);
+            return new DungeonNode(getEntrances(), this.pos);
         }
 
         public void cull() {
-            List<Tunneler> toKeep = new ArrayList<>();
-            for (Tunneler t : this.tunnelers) {
-                if (t.done) {
-                    toKeep.add(t);
-                }
-            }
-            this.tunnelers = toKeep;
+            tunnelers.removeIf(t -> !t.done);
         }
     }
 }
