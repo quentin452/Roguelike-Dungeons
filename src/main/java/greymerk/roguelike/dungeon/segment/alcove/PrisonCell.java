@@ -19,10 +19,12 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 public class PrisonCell implements IAlcove {
 
     private static final int RECESSED = 5;
-
     @Override
     public void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir) {
-
+        generatestatic(editor, rand, settings,dir, origin);
+    }
+    public void generatestatic(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir,
+                               Coord origin) {
         ITheme theme = settings.getTheme();
         IBlockFactory walls = theme.getPrimaryWall();
         MetaBlock air = BlockType.get(BlockType.AIR);

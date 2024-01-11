@@ -80,7 +80,7 @@ public class WorldEditor implements IWorldEditor {
     }
 
     private void updateStats(Block block) {
-        stats.merge(block, 1, Integer::sum);
+        stats.compute(block, (key, value) -> (value == null) ? 1 : value + 1);
     }
 
     public boolean isAirBlock(Coord pos) {

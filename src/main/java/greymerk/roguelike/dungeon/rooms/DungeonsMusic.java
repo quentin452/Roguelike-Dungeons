@@ -24,8 +24,14 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsMusic extends DungeonBase {
 
+    @Override
     public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
-            Coord origin) {
+                            Coord origin) {
+        generatestatic(editor, rand, settings, entrances, origin);
+        return false;
+    }
+    public boolean generatestatic(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
+                                  Coord origin) {
         ITheme theme = settings.getTheme();
         IBlockFactory wall = theme.getPrimaryWall();
         IStair stair = theme.getSecondaryStair();
@@ -38,7 +44,7 @@ public class DungeonsMusic extends DungeonBase {
         Coord end;
         Coord cursor;
 
-        List<Coord> chests = new ArrayList<Coord>();
+        List<Coord> chests = new ArrayList<>();
 
         start = new Coord(origin);
         end = new Coord(origin);

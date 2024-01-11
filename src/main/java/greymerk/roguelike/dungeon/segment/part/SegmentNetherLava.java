@@ -17,7 +17,11 @@ public class SegmentNetherLava extends SegmentBase {
 
     @Override
     protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
-            Coord origin) {
+                           Coord origin) {
+        genWallstatic(editor, rand, level, dir, theme, origin);
+    }
+    private static void genWallstatic(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
+                                      Coord origin) {
 
         IStair step = theme.getSecondaryStair();
         MetaBlock air = BlockType.get(BlockType.AIR);

@@ -13,8 +13,12 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 public class SegmentPlant extends SegmentBase {
 
     @Override
-    protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme, Coord origin) {
-
+    protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
+                           Coord origin) {
+        genWallstatic(editor, rand, level, dir, theme, origin);
+    }
+    private static void genWallstatic(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
+                                      Coord origin) {
         MetaBlock air = BlockType.get(BlockType.AIR);
         IStair stair = theme.getSecondaryStair();
 
@@ -55,7 +59,7 @@ public class SegmentPlant extends SegmentBase {
         plant(editor, rand, theme, cursor);
     }
 
-    private void plant(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
+    private static void plant(IWorldEditor editor, Random rand, ITheme theme, Coord origin) {
         MetaBlock dirtPodzol = BlockType.get(BlockType.DIRT_PODZOL);
 
         // Avoiding redundant Coord creation

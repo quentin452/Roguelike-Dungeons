@@ -20,10 +20,14 @@ import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonAvidya extends DungeonBase {
-
     @Override
     public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
-            Coord origin) {
+                            Coord origin) {
+        generatestatic(editor, rand, settings, entrances, origin);
+        return false;
+    }
+    public boolean generatestatic(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
+                                  Coord origin) {
 
         int x = origin.getX();
         int y = origin.getY();

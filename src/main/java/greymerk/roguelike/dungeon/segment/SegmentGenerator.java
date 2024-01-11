@@ -60,10 +60,12 @@ public class SegmentGenerator implements ISegmentGenerator {
 
         List<ISegment> segs = new ArrayList<>();
 
+        Coord coord = new Coord(pos);
+
         for (Cardinal orth : Cardinal.orthogonal(dir)) {
             ISegment seg = pickSegment(editor, rand, level, dir, pos);
             if (seg == null) return segs;
-            seg.generate(editor, rand, level, orth, level.getSettings().getTheme(), new Coord(pos));
+            seg.generate(editor, rand, level, orth, level.getSettings().getTheme(), coord);
             segs.add(seg);
         }
 
@@ -77,21 +79,11 @@ public class SegmentGenerator implements ISegmentGenerator {
         int x = pos.getX();
         int z = pos.getZ();
 
-        if ((dir == Cardinal.NORTH || dir == Cardinal.SOUTH) && z % 3 == 0) {
-            if (z % 6 == 0) {
-                return Segment.getSegment(arch);
-            }
-            return Segment.getSegment(this.segments.get(rand));
-        }
-
-        if ((dir == Cardinal.WEST || dir == Cardinal.EAST) && x % 3 == 0) {
-            if (x % 6 == 0) {
-                return Segment.getSegment(arch);
-            }
-            return Segment.getSegment(this.segments.get(rand));
-        }
-
-        return null;
+        return ((dir == Cardinal.NORTH || dir == Cardinal.SOUTH) && z % 3 == 0) ?
+            ((z % 6 == 0) ? Segment.getSegment(arch) : Segment.getSegment(segments.get(rand))) :
+            ((dir == Cardinal.WEST || dir == Cardinal.EAST) && x % 3 == 0) ?
+                ((x % 6 == 0) ? Segment.getSegment(arch) : Segment.getSegment(segments.get(rand))) :
+                null;
     }
 
     private void addSupport(IWorldEditor editor, Random rand, ITheme theme, int x, int y, int z) {

@@ -39,7 +39,12 @@ public class DungeonBTeam extends DungeonBase {
 
     @Override
     public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
-            Coord origin) {
+                            Coord origin) {
+        generatestatic(editor, rand, settings, entrances, origin);
+        return false;
+    }
+    public boolean generatestatic(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
+                                  Coord origin) {
 
         MetaBlock air = BlockType.get(BlockType.AIR);
         IStair stair = new MetaStair(StairType.SPRUCE);

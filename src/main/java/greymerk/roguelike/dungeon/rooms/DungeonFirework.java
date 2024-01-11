@@ -32,7 +32,12 @@ public class DungeonFirework extends DungeonBase {
     @Override
     public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
             Coord origin) {
-
+        generate(editor, rand, entrances,
+            origin);
+        return false;
+    }
+    private static void generate(IWorldEditor editor, Random rand, Cardinal[] entrances,
+                                 Coord origin) {
         int x = origin.getX();
         int y = origin.getY();
         int z = origin.getZ();
@@ -154,11 +159,8 @@ public class DungeonFirework extends DungeonBase {
         glowstone.set(editor, cursor);
         cursor.add(dir, 6);
         glowstone.set(editor, cursor);
-
-        return false;
     }
-
-    private void launcher(IWorldEditor editor, Random rand, Cardinal dir, Coord pos) {
+    private static void launcher(IWorldEditor editor, Random rand, Cardinal dir, Coord pos) {
         Coord cursor = new Coord(pos);
         BlockType.get(BlockType.REDSTONE_WIRE).set(editor, cursor);
         cursor.add(Cardinal.reverse(dir));

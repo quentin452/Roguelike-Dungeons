@@ -215,7 +215,7 @@ public class LevelGeneratorClassic implements ILevelGenerator {
     }
 
     private class Node {
-        private List<Tunneler> tunnelers;
+        private final List<Tunneler> tunnelers;
         private final LevelGeneratorClassic level;
         private final LevelSettings settings;
         private final Cardinal direction;

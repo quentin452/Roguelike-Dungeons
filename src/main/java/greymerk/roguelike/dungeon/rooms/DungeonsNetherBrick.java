@@ -19,8 +19,14 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsNetherBrick extends DungeonBase {
 
-    public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances, Coord origin) {
-        int x = origin.getX();
+    @Override
+    public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
+                            Coord origin) {
+        generatestatic(editor, rand, settings, entrances, origin);
+        return false;
+    }
+    public boolean generatestatic(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
+                                  Coord origin) {        int x = origin.getX();
         int y = origin.getY();
         int z = origin.getZ();
         ITheme theme = settings.getTheme();

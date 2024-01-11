@@ -18,7 +18,11 @@ public class SegmentAnkh extends SegmentBase {
 
     @Override
     protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
-            Coord pos) {
+                           Coord origin) {
+        genWallstatic(editor, rand, level, dir, theme, origin);
+    }
+    private static void genWallstatic(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
+                                      Coord origin) {
         Coord start;
         Coord end;
         Coord cursor;
@@ -32,7 +36,7 @@ public class SegmentAnkh extends SegmentBase {
 
         Cardinal[] orth = Cardinal.orthogonal(dir);
 
-        start = new Coord(pos);
+        start = new Coord(origin);
         start.add(dir, 2);
         end = new Coord(start);
         end.add(Cardinal.UP, 2);
@@ -41,7 +45,7 @@ public class SegmentAnkh extends SegmentBase {
 
         for (Cardinal o : orth) {
 
-            cursor = new Coord(pos);
+            cursor = new Coord(origin);
             cursor.add(dir, 2);
             cursor.add(o);
             stair.setOrientation(Cardinal.reverse(o), false).set(editor, cursor);
@@ -51,7 +55,7 @@ public class SegmentAnkh extends SegmentBase {
             stair.setOrientation(Cardinal.reverse(o), true).set(editor, cursor);
         }
 
-        start = new Coord(pos);
+        start = new Coord(origin);
         start.add(dir, 3);
         end = new Coord(start);
         start.add(orth[0]);
@@ -62,7 +66,7 @@ public class SegmentAnkh extends SegmentBase {
         end.add(dir);
         RectSolid.fill(editor, rand, start, end, back);
 
-        cursor = new Coord(pos);
+        cursor = new Coord(origin);
         cursor.add(dir, 3);
         cursor.add(Cardinal.DOWN);
         glowstone.set(editor, cursor);

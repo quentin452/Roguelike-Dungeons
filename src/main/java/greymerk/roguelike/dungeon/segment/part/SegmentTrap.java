@@ -24,7 +24,11 @@ public class SegmentTrap extends SegmentBase {
 
     @Override
     protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
-            Coord origin) {
+                           Coord origin) {
+        genWallstatic(editor, rand, level, dir, theme, origin);
+    }
+    private static void genWallstatic(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
+                                      Coord origin) {
 
         MetaBlock plate = BlockType.get(BlockType.PRESSURE_PLATE_STONE);
         MetaBlock wire = BlockType.get(BlockType.REDSTONE_WIRE);
@@ -92,7 +96,7 @@ public class SegmentTrap extends SegmentBase {
         Dispenser.add(editor, cursor, 5, getPayload(rand));
     }
 
-    private ItemStack getPayload(Random rand) {
+    private static ItemStack getPayload(Random rand) {
 
         switch (rand.nextInt(3)) {
             case 0:

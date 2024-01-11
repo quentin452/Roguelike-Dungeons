@@ -15,9 +15,14 @@ import greymerk.roguelike.worldgen.blocks.Quartz;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 
 public class DungeonsEnder extends DungeonBase {
-
-    public boolean generate(IWorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances,
-            Coord origin) {
+    @Override
+    public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
+                            Coord origin) {
+        generatestatic(editor, rand, settings, entrances, origin);
+        return false;
+    }
+    public boolean generatestatic(IWorldEditor editor, Random inRandom, LevelSettings settings, Cardinal[] entrances,
+                                  Coord origin) {
 
         MetaBlock black = BlockType.get(BlockType.OBSIDIAN);
         MetaBlock white = Quartz.get(Quartz.SMOOTH);

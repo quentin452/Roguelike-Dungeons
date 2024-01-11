@@ -22,6 +22,10 @@ public class SilverfishNest implements IAlcove {
 
     @Override
     public void generate(IWorldEditor editor, Random rand, LevelSettings settings, Coord origin, Cardinal dir) {
+        generatestatic(editor, rand, settings,dir, origin);
+    }
+    public void generatestatic(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal dir,
+                               Coord origin) {
 
         Coord corridor = new Coord(origin);
         Coord centre = new Coord(origin);

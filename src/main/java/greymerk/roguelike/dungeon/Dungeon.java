@@ -73,38 +73,37 @@ public class Dungeon implements IDungeon {
         ILoot loot = Loot.getLoot();
         settings.getLootRules().process(rand, loot, treasure);
 
+        generateResourceNotes();
+        generateBook(rand);
+    }
+
+    private void generateResourceNotes() {
+        StringBuilder resourceNotes = new StringBuilder("~Architect's Resource Notes~\n\n");
+        resourceNotes.append("StoneBrick: ").append(editor.getStat(Blocks.stonebrick)).append("\n")
+            .append("Cobblestone: ").append(editor.getStat(Blocks.cobblestone)).append("\n")
+            .append("Logs: ").append(editor.getStat(Blocks.log) + editor.getStat(Blocks.log2)).append("\n")
+            .append("Iron Bars: ").append(editor.getStat(Blocks.iron_bars)).append("\n")
+            .append("Chests: ").append(editor.getStat(Blocks.chest) + editor.getStat(Blocks.trapped_chest)).append("\n")
+            .append("Mob Spawners: ").append(editor.getStat(Blocks.mob_spawner)).append("\n")
+            .append("TNT: ").append(editor.getStat(Blocks.tnt)).append("\n")
+            .append("\n-Greymerk");
+
+        Book book = new Book("Greymerk", "Statistics");
+        book.addPage(resourceNotes.toString());
+    }
+
+    private void generateBook(Random rand) {
         Book book = new Book("Greymerk", "Statistics");
         book.addPage(
-                "~Architect's Resource Notes~\n\n" + "StoneBrick: "
-                        + editor.getStat(Blocks.stonebrick)
-                        + "\n"
-                        + "Cobblestone: "
-                        + editor.getStat(Blocks.cobblestone)
-                        + "\n"
-                        + "Logs: "
-                        + (editor.getStat(Blocks.log) + editor.getStat(Blocks.log2))
-                        + "\n"
-                        + "Iron Bars: "
-                        + editor.getStat(Blocks.iron_bars)
-                        + "\n"
-                        + "Chests: "
-                        + (editor.getStat(Blocks.chest) + editor.getStat(Blocks.trapped_chest))
-                        + "\n"
-                        + "Mob Spawners: "
-                        + editor.getStat(Blocks.mob_spawner)
-                        + "\n"
-                        + "TNT: "
-                        + editor.getStat(Blocks.tnt)
-                        + "\n"
-                        + "\n-Greymerk");
-        book.addPage(
-                "Roguelike Dungeons v" + Roguelike.version
-                        + "\n"
-                        + "April 16th 2016\n\n"
-                        + "Credits\n\n"
-                        + "Author: Greymerk\n\n"
-                        + "Bits: Drainedsoul\n\n"
-                        + "Ideas: Eniko @enichan");
+            "Roguelike Dungeons v" + Roguelike.version
+                + "\n"
+                + "April 16th 2016\n\n"
+                + "Credits\n\n"
+                + "Author: Greymerk\n\n"
+                + "Bits: Drainedsoul\n\n"
+                + "Ideas: Eniko @enichan");
+
+        TreasureManager treasure = editor.getTreasure();
         treasure.addItemToAll(rand, Treasure.STARTER, new WeightedChoice<>(book.get(), 1), 1);
     }
 

@@ -16,8 +16,12 @@ import greymerk.roguelike.worldgen.shapes.RectSolid;
 public class SegmentJungle extends SegmentBase {
 
     @Override
-    protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal wallDirection, ITheme theme,
-            Coord origin) {
+    protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
+                           Coord origin) {
+        genWallstatic(editor, rand, level, dir, theme, origin);
+    }
+    private static void genWallstatic(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal wallDirection, ITheme theme,
+                                      Coord origin) {
 
         IStair stair = theme.getSecondaryStair();
 

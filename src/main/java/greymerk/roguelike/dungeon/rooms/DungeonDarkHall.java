@@ -20,7 +20,12 @@ public class DungeonDarkHall extends DungeonBase {
 
     @Override
     public boolean generate(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
-            Coord origin) {
+                            Coord origin) {
+        generatestatic(editor, rand, settings, entrances, origin);
+        return false;
+    }
+    public boolean generatestatic(IWorldEditor editor, Random rand, LevelSettings settings, Cardinal[] entrances,
+                                  Coord origin) {
 
         ITheme theme = settings.getTheme();
 

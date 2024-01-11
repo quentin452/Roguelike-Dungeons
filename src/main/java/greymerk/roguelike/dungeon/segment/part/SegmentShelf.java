@@ -16,7 +16,11 @@ public class SegmentShelf extends SegmentBase {
 
     @Override
     protected void genWall(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
-            Coord origin) {
+                           Coord origin) {
+        genWallstatic(editor, rand, level, dir, theme, origin);
+    }
+    private static void genWallstatic(IWorldEditor editor, Random rand, IDungeonLevel level, Cardinal dir, ITheme theme,
+                                      Coord origin) {
 
         MetaBlock air = BlockType.get(BlockType.AIR);
         IStair stair = theme.getSecondaryStair();
